@@ -1,0 +1,4 @@
+The makerelease script allows developers to perform an
+partially-automated set of steps that a developer needs to perform in
+order to release their software.  It checks the results at each step
+and prompts the developer with any issues it runs into as it goes along.
