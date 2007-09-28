@@ -3,7 +3,7 @@
 use ExtUtils::MakeMaker;
 
 %opts = (
-	 'NAME'		=> 'makerelease',
+	 'NAME'		=> 'Makerelease',
 	 'PREREQ_PM'    => { XML::Simple => 0 },
 	 'EXE_FILES' => [qw(makerelease)],
 	);

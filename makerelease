@@ -3,6 +3,7 @@
 use strict;
 use XML::Simple;
 use Data::Dumper;
+use Makerelease;
 
 my %opts = (c => "makerelease.xml");
 my $descr;
@@ -50,93 +51,8 @@ my $relinfo = XMLin($opts{'c'},
 
 ######################################################################
 # Process steps
-process_steps($relinfo,'');
-
-sub process_steps {
-    my ($relinfo, $parentstep) = @_;
-    my $counter;
-    foreach my $step (@{$relinfo->{'steps'}[0]{'step'}}) {
-	$counter++;
-
-	# print the step header
-	start_step("$parentstep$counter", $step->{'title'});
-
-	# print description of the step if it exists
-	print $step->{'text'}, "\n\n" if (exists($step->{'text'}));
-
-	# skip running the step if this is a dry run.
-	next if ($opts{'n'});
-
-	# XXX: interactive prompt to do step here
-
-	# XXX: skip up to step based on number here
-
-	# XXX: skip up to step based on nmae here
-
-	DEBUG("processing step: $parentstep.$counter: type=$step->{'type'}\n");
-
-	######################################################################
-	# INFORMATIONAL steps: just print information and pause
-	######################################################################
-	if ($step->{'type'} eq 'informational' || 
-	    $step->{'type'} eq 'manual') {
-	    my $info = getinput("---- PRESS ENTER TO CONTINUE ----");
-	    next;
-	}
-
-	######################################################################
-	# SYSTEM steps: run the specified command
-	######################################################################
-	if ($step->{'type'} eq 'system') {
-
-	    foreach my $command (@{$step->{'commands'}[0]{'command'}}) {
-		my $status = 1;
-
-		# run it till we get a succeesful result or they bail on us
-		
-		while ($status ne '0') {
-		    print STDERR "  running '",$command,"'\n\n";
-		    system("$command");
-		    $status = $?;
-
-		    if ($status ne 0 ) {
-			# command failed, prompt for what to do?
-			my $dowhat = '';
-
-			while ($dowhat eq '') {
-			    $dowhat = getinput("failed: status=$? what now?");
-			
-			    # if answered:
-			    #   c => continue
-			    #   q => quit
-			    if ($dowhat eq 'c') {
-				$status = 0;
-			    } elsif ($dowhat eq 'q') {
-				exit 1;
-			    } else {
-				print "unknown response: $dowhat\n";
-			        $dowhat = '';
-			    }
-			}
-		    }
-		    print "\n";
-		}
-	    }
-	    my $info = getinput("---- PRESS ENTER TO CONTINUE ----");
-	    next;
-	}
-
-	######################################################################
-	# SECTION steps: (maybe) dive into a sub-step list
-	######################################################################
-	if ($step->{'type'} eq 'section') {
-	    process_steps($step, "$parentstep$counter.");
-	    next;
-	}	
-
-	die "illegal step type: $step->{'type'}\n";
-    }
-}
+my $makerelease = new Makerelease(opts => \%opts);
+$makerelease->process_steps($relinfo,'');
 
 exit;
 #
