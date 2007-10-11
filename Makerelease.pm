@@ -42,7 +42,6 @@ sub process_steps {
 
 	# create a module instance
 	my $stepmodule = eval "new $module";
-	print "here: " . ref($stepmodule) . "\n";
 	if (!$stepmodule) {
 	    print STDERR
 	      "Can't create an instance of the \"step\" module\n";
@@ -60,10 +59,7 @@ sub process_steps {
 	# print description of the step if it exists
 	$stepmodule->print_description($step);
 
-	# skip running the step if this is a dry run.
-	next if ($self->{'opts'}{'n'});
-
-	# XXX: interactive prompt to do step here
+	next if ($stepmodule->possibly_skip($step, $parentstep, $counter));
 
 	# XXX: skip up to step based on number here
 
@@ -73,9 +69,6 @@ sub process_steps {
 
 	$stepmodule->step($step, $parentstep, $counter);
 	$stepmodule->finish_step($step);
-	next;
-
-	die "illegal step type: $step->{'type'}\n";
     }
 }
 
@@ -86,8 +79,9 @@ sub start_step {
 
 sub getinput {
     my ($self, $prompt) = @_;
-    print "$prompt\n" if ($prompt);
+    print "$prompt " if ($prompt);
     my $bogus = <STDIN>;
+    chomp($bogus);
     return $bogus;
 }
 
@@ -96,6 +90,11 @@ sub DEBUG {
     if ($self->{'opts'}{'v'}) {
 	print STDERR @args;
     }
+}
+
+sub output {
+    my $self = shift;
+    print STDERR "  ",@_;
 }
 
 1;

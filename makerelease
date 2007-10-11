@@ -15,8 +15,7 @@ LocalGetOptions(\%opts,
 	   ['i|interactive',          'Prompt whether to do each step'],
  	   ['n|dry-run',     'Dry run only.  Don\'t actually do anything.'],
 	   ['v|verbose',     'Verbose output about steps taken.'],
-	   ['h|help', 'Help']);
-
+	   ['h|help', 'Help']) || exit;
 
 my $version = shift;
 die "No version supplied" if (!$version);
@@ -24,6 +23,7 @@ my $extrajunk = shift;
 die "Unexpected argument ($extrajunk)" if ($extrajunk);
 my $vtag   = $version;
 my $branch = "";
+our $RELEASE=$version;  # global variable
 # Ensure we have both numeric and tag-style version labels
 # plus the branch that we're working from (if relevant)
 if ( $version =~ /^Ext/) {
@@ -47,7 +47,9 @@ if (!-f $opts{'c'}) {
 }
 
 my $relinfo = XMLin($opts{'c'},
-		    ForceArray => [qw(steps step commands command)]);
+		    #XXX: should probably forcearray => 1 for everything
+		    ForceArray => [qw(steps step commands command
+				      modifications modify)]);
 
 ######################################################################
 # Process steps

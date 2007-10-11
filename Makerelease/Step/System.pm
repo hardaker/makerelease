@@ -14,16 +14,25 @@ sub step {
 	# run it till we get a succeesful result or they bail on us
 		
 	while ($status ne '0') {
-	    print STDERR "  running '",$command,"'\n\n";
+
+	    my $ignoreerror = 0;
+
+	    if (ref($command) eq 'HASH') {
+		$ignoreerror = 1 if ($command->{'ignoreerrors'});
+		$command = $command->{'content'};
+	    }
+
+	    $self->output("running '",$command,"'\n\n");
 	    system("$command");
 	    $status = $?;
 
-	    if ($status ne 0 ) {
+	    if (!$ignoreerror && $status ne 0 ) {
 		# command failed, prompt for what to do?
 		my $dowhat = '';
 
 		while ($dowhat eq '') {
-		    $dowhat = getinput("failed: status=$? what now?");
+		    $dowhat =
+		      $self->getinput("failed: status=$? what now (c,r,q)?");
 			
 		    # if answered:
 		    #   c => continue
@@ -31,14 +40,17 @@ sub step {
 		    if ($dowhat eq 'c') {
 			$status = 0;
 		    } elsif ($dowhat eq 'q') {
+			$self->output("Quitting at step '$parentstep$counter' as requested\n");
 			exit 1;
+		    } elsif ($dowhat eq 'r') {
+			$self->output("-- re-running ----------\n");
 		    } else {
-			print "unknown response: $dowhat\n";
+			$self->output("unknown response: $dowhat\n");
 			$dowhat = '';
 		    }
 		}
 	    }
-	    print "\n";
+	    $self->output("\n");
 	}
     }
 }
