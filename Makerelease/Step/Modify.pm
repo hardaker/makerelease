@@ -37,5 +37,19 @@ sub step {
     }
 }
 
+sub document_step {
+    my ($self, $step, $parentstep, $counter) = @_;
+
+    foreach my $modify (@{$step->{'modifications'}[0]{'modify'}}) {
+	$self->output("Modifying files:\n");
+	$self->output("  replacing: '$modify->{'find'}' with: '$modify->{'replace'}'\n\n");
+	$self->output("  files:\n");
+	my @files = glob($modify->{'files'});
+	foreach my $file (@files) {
+	    $self->output("    " . $file);
+	}
+    }
+}
+
 1;
 

@@ -55,5 +55,15 @@ sub step {
     }
 }
 
+sub document_step {
+    my ($self, $step, $parentstep, $counter) = @_;
+
+    $self->output("Commands to execute:\n");
+    foreach my $command (@{$step->{'commands'}[0]{'command'}}) {
+	$self->output("  " . ((ref($command) eq 'HASH') ? 
+			      $command->{'content'} : $command). "\n");
+    }
+}
+
 1;
 

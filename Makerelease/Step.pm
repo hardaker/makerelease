@@ -28,7 +28,10 @@ sub possibly_skip_yn {
 
 sub possibly_skip_dryrun {
     my ($self, $step, $parentstep, $counter) = @_;
-    return 1 if ($self->{'opts'}{'n'});
+    if ($self->{'opts'}{'n'}) {
+	$self->document_step($step, $parentstep, $counter);
+	return 1;
+    }
     return 0;
 }
 
@@ -57,6 +60,15 @@ sub finish_step {
     sleep($self->{'opts'}{'s'}) if ($self->{'opts'}{'s'});
     return if (!$self->{'opts'}{'p'});
     my $info = $self->getinput("---- PRESS ENTER TO CONTINUE ----");
+}
+
+sub document_step {
+}
+
+sub expand_parameters {
+    my ($self, $string) = @_;
+
+    $string =~ s/{([^\}])+}/$self->{'parameters'}{$1}/;
 }
 
 1;
