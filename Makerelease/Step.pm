@@ -11,8 +11,13 @@ sub start_step {
 
 sub possibly_skip_yn {
     my ($self, $step, $parentstep, $counter) = @_;
-    if ($self->{'opts'}{'i'}) {
-	my $info = $self->getinput("Do step $parentstep$counter (y,n)?");
+
+    if ($self->{'opts'}{'i'} || $step->{'interactive'}) {
+	my $info = $self->getinput("Do step $parentstep$counter (y,n,q)?");
+	if ($info eq 'q') {
+	    $self->output("... quitting as requested\n");
+	    exit;
+	}
 	if ($info eq 'n') {
 	    $self->output("... skipping step $parentstep$counter\n");
 	    return 1;
@@ -29,7 +34,9 @@ sub possibly_skip_dryrun {
 
 # return 1 to skip, 0 to do it
 sub possibly_skip {
-    my ($self, $step, $parentstep, $counter) = @_;
+    my $self = shift;
+
+    my ($step, $parentstep, $counter) = @_;
 
     # handle -n
     return 1 if ($self->possibly_skip_dryrun(@_));
