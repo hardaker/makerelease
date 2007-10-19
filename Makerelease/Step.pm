@@ -51,15 +51,25 @@ sub possibly_skip {
 sub print_description {
     my ($self, $step) = @_;
     my $text = $self->expand_parameters($step->{'text'});
-    $text =~ s/\n\s*//g;
-    print $step->{'text'}, "\n\n" if (exists($step->{'text'}));
+    $text =~ s/\n\s*$//g;
+    print $text, "\n\n" if ($text);
 }
 
 sub finish_step {
-    my ($self, $step) = @_;
-    sleep($self->{'opts'}{'s'}) if ($self->{'opts'}{'s'});
-    return if (!$self->{'opts'}{'p'});
-    my $info = $self->getinput("---- PRESS ENTER TO CONTINUE ----");
+    my ($self, $step, $parentstep, $counter) = @_;
+
+    # maybe sleep if we're not pausing
+    if (!$self->{'opts'}{'p'} && !$step->{'pause'}) {
+	sleep($self->{'opts'}{'s'}) if ($self->{'opts'}{'s'});
+	return;
+    }
+
+    # pause display
+    my $info = $self->getinput("---- PRESS ENTER TO CONTINUE (q=quit) ----");
+    if ($info eq 'q') {
+	$self->output("Quitting...\n");
+	exit;
+    }
 }
 
 sub document_step {
