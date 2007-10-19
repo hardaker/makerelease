@@ -28,6 +28,16 @@ die "Unexpected argument ($extrajunk)" if ($extrajunk);
 my $vtag   = $version;
 
 ######################################################################
+# Parse the parameters
+if ($opts{'p'}) {
+    foreach my $def (split(/,\s*/,$opts{'p'})) {
+	my ($name, $value) = ($def =~ /^([^=]+)=(.*)/);
+	die "bad parameter spec: $def\n" if (!defined($name));
+	$parameters{$name} = $value;
+    }
+}
+
+######################################################################
 # read in XML structure
 if (!-f $opts{'c'}) {
     print STDERR "Can't find a configuration file: $opts{'c'}  (use the -c flag to specify one)\n";
