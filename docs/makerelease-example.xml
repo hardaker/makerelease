@@ -5,8 +5,11 @@
       <text>Hello World!</text>
     </step>
 
-    <step type="informational" title="second step">
-      <text>(x2)</text>
+    <step type="prompt" prompt="Enter a number:" title="pick a number"
+      parameter="THENUMBER" values="^\d+$" />
+
+    <step type="informational" title="second step" pause='true'>
+      <text>Replacement test:  This should be what you entered: {THENUMBER}</text>
     </step>
 
     <step type="system" title="run some stuff">
