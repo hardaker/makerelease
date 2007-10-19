@@ -3,6 +3,8 @@ package Makerelease::Step::System;
 use strict;
 use Makerelease::Step;
 
+our $VERSION = "0.1";
+
 our @ISA=qw(Makerelease::Step);
 
 sub get_command_string {

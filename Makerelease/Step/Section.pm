@@ -3,6 +3,8 @@ package Makerelease::Step::Section;
 use strict;
 use Makerelease::Step;
 
+our $VERSION = "0.1";
+
 our @ISA=qw(Makerelease::Step);
 
 # sub-sections don't skip on the dry-runs...  only executing steps do.
