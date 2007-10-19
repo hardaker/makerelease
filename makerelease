@@ -19,13 +19,8 @@ LocalGetOptions(\%opts,
 	   ['v|verbose',     'Verbose output about steps taken.'],
 	   ['h|help', 'Help']) || exit;
 
-my $version = shift;
-$parameters{'VERSION'} = $version;
-die "No version supplied" if (!$version);
-
 my $extrajunk = shift;
 die "Unexpected argument ($extrajunk)" if ($extrajunk);
-my $vtag   = $version;
 
 ######################################################################
 # Parse the parameters
