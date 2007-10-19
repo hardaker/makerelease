@@ -69,7 +69,7 @@ sub process_steps {
 	$self->DEBUG("processing step: $parentstep.$counter: type=$step->{'type'}\n");
 
 	$stepmodule->step($step, $parentstep, $counter);
-	$stepmodule->finish_step($step);
+	$stepmodule->finish_step($step, $parentstep, $counter);
     }
 }
 
