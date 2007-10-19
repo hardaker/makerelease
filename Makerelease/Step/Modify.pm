@@ -14,6 +14,8 @@ sub step {
 	my $findregex = $self->expand_parameters($modify->{'find'});
 	my $replaceregex = $self->expand_parameters($modify->{'replace'});
 
+	my $asub = eval "sub { s/$findregex/$replaceregex/; }";
+
 	foreach my $file (@files) {
 
 	    $self->output("modifying $file\n");
@@ -24,7 +26,7 @@ sub step {
 	    $out->open(">$file.mrnew") || die "ack: couldn't open $file.mrnew";
 
 	    while (<$in>) {
-		s/$findregex/$replaceregex/g;
+		$asub->();
 		print $out $_;
 	    }
 
