@@ -54,6 +54,7 @@ sub process_steps {
 
 	# auto-inherit some parameters
 	$stepmodule->{'opts'} = $self->{'opts'};
+	$stepmodule->{'parameters'} = $self->{'parameters'};
 	$stepmodule->{'master'} = $self;
 
 	# print description of the step if it exists
