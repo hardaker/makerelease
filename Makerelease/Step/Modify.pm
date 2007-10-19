@@ -10,9 +10,9 @@ sub step {
     my ($self, $step, $parentstep, $counter) = @_;
 
     foreach my $modify (@{$step->{'modifications'}[0]{'modify'}}) {
-	my @files = glob($modify->{'files'});
-	my $findregex = $modify->{'find'};
-	my $replaceregex = $modify->{'replace'};
+	my @files = glob($self->expand_parameters($modify->{'files'}));
+	my $findregex = $self->expand_parameters($modify->{'find'});
+	my $replaceregex = $self->expand_parameters($modify->{'replace'});
 
 	foreach my $file (@files) {
 
@@ -41,13 +41,17 @@ sub document_step {
     my ($self, $step, $parentstep, $counter) = @_;
 
     foreach my $modify (@{$step->{'modifications'}[0]{'modify'}}) {
+	my $findregex = $self->expand_parameters($modify->{'find'});
+	my $replaceregex = $self->expand_parameters($modify->{'replace'});
 	$self->output("Modifying files:\n");
-	$self->output("  replacing: '$modify->{'find'}' with: '$modify->{'replace'}'\n\n");
-	$self->output("  files:\n");
-	my @files = glob($modify->{'files'});
+	$self->output("  replacing: '$findregex' with: '$replaceregex'\n\n");
+	$self->output("  files:  glob=" .
+		      $self->expand_parameters($modify->{'files'}) . "\n");
+	my @files = glob($self->expand_parameters($modify->{'files'}));
 	foreach my $file (@files) {
-	    $self->output("    " . $file);
+	    $self->output("    " . $file . "\n");
 	}
+	$self->output("\n");
     }
 }
 

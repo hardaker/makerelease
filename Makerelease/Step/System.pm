@@ -5,6 +5,19 @@ use Makerelease::Step;
 
 our @ISA=qw(Makerelease::Step);
 
+sub get_command_string {
+    my ($self, $commandstart) = @_;
+
+    my $command;
+
+    if (ref($commandstart) eq 'HASH') {
+	$command = $commandstart->{'content'};
+    } else {
+	$command = $commandstart;
+    }
+    return $self->expand_parameters($command);
+}
+
 sub step {
     my ($self, $step, $parentstep, $counter) = @_;
 
@@ -16,17 +29,17 @@ sub step {
 	while ($status ne '0') {
 
 	    my $ignoreerror = 0;
+	    $ignoreerror = 1
+	      if (ref($command) eq 'HASH' && $command->{'ignoreerror'});
 
-	    if (ref($command) eq 'HASH') {
-		$ignoreerror = 1 if ($command->{'ignoreerrors'});
-		$command = $command->{'content'};
-	    }
+	    my $cmdstr = $self->get_command_string($command);
 
-	    $self->output("running '",$command,"'\n\n");
-	    system("$command");
+	    $self->output("running '",$cmdstr,"'\n\n");
+	    system("$cmdstr");
 	    $status = $?;
+	    $status = 0 if ($ignoreerror);
 
-	    if (!$ignoreerror && $status ne 0 ) {
+	    if ($status ne 0 ) {
 		# command failed, prompt for what to do?
 		my $dowhat = '';
 
@@ -60,8 +73,7 @@ sub document_step {
 
     $self->output("Commands to execute:\n");
     foreach my $command (@{$step->{'commands'}[0]{'command'}}) {
-	$self->output("  " . ((ref($command) eq 'HASH') ? 
-			      $command->{'content'} : $command). "\n");
+	$self->output("  " . $self->get_command_string($command) . "\n");
     }
 }
 

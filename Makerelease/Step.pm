@@ -50,7 +50,7 @@ sub possibly_skip {
 
 sub print_description {
     my ($self, $step) = @_;
-    my $text = $step->{'text'};
+    my $text = $self->expand_parameters($step->{'text'});
     $text =~ s/\n\s*//g;
     print $step->{'text'}, "\n\n" if (exists($step->{'text'}));
 }
@@ -68,7 +68,9 @@ sub document_step {
 sub expand_parameters {
     my ($self, $string) = @_;
 
-    $string =~ s/{([^\}])+}/$self->{'parameters'}{$1}/;
+    # ignore {} sets with a leading $
+    $string =~ s/([^\$]){([^\}]+)}/$1$self->{'parameters'}{$2}/g;
+    return $string;
 }
 
 1;
