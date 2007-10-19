@@ -1,0 +1,80 @@
+<makerelease>
+  <steps>
+
+    <step type="informational" title="print test">
+      <text>Hello World!</text>
+    </step>
+
+    <step type="informational" title="second step">
+      <text>(x2)</text>
+    </step>
+
+    <step type="system" title="run some stuff">
+      <text>I'm going to run some echo tests</text>
+      <commands>
+	<command>echo hello world</command>
+	<command>echo do something</command>
+      </commands>
+    </step>
+
+    <step type="section" title="sub step tests">
+      <text>This will dive into a number of sub-steps to accomplish
+      something big</text>
+      <steps>
+	<step type="system" title="in a sub test: simple echo">
+	  <commands>
+	    <command>echo inside</command>
+	</commands>
+	</step>
+	<step type="informational">
+	  <text>woot</text>
+	</step>
+      </steps>
+    </step>
+
+    <step type="informational" title="coming back out of sub-steps">
+      <text>coming back out</text>
+    </step>
+
+    <step type="section" title="Modification Testing Steps">
+      <text>This will dive into a set of tests to test the
+      modification step mechanisms</text>
+
+      <steps>
+	<step type="system" title="Set up test files">
+	  <text>This copies the test files into place</text>
+	  <commands>
+	    <command>cp t/test.txt.dist t/test.txt</command>
+	    <command>mkdir t/{VERSION}</command>
+	    <command>cp t/test.txt.dist t/{VERSION}/test.txt</command>
+	  </commands>
+	</step>
+
+	<step type="modify" title="Testing Modifications" interactive="yes">
+	  <text>This actually modifies the files</text>
+	  <modifications>
+	    <modify
+	      files="t/*.txt"
+	      find="^([a-z]+\s*=\s*)([0-9+])"
+	      replace="${1}{VERSION}"
+	      />
+	    <modify
+	      files="t/{VERSION}/*.txt"
+	      find="^([a-z]+\s*=\s*)([0-9+])"
+	      replace="${1}{VERSION}"
+	      />
+	  </modifications>
+	</step>
+
+	<step type="system" title="Compare modifications">
+	  <text>This tests the old files against the new and shows the
+	  differences (using diff)</text>
+	  <commands>
+	    <command ignoreerror="1" test="x">diff -u t/test.txt.dist t/test.txt</command>
+	    <command ignoreerror="1" test="x">diff -u t/test.txt.dist t/{VERSION}/test.txt</command>
+	  </commands>
+	</step>
+      </steps>
+    </step>
+  </steps>
+</makerelease>
