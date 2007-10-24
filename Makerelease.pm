@@ -98,6 +98,12 @@ sub output {
     print STDERR "  ",@_;
 }
 
+sub ensure_array {
+    my ($self, $something) = @_;
+    return $something if (ref($something) eq 'ARRAY');
+    return [$something];
+}
+
 1;
 
 =head1 NAME

@@ -8,17 +8,34 @@ our $VERSION = "0.1";
 
 our @ISA=qw(Makerelease::Step);
 
+sub get_files {
+    my ($self, $modify) = @_;
+
+    my @files;
+
+    my $files = $modify->{'files'};
+    if (ref($files) eq 'HASH') {
+	foreach my $fileref (@{$self->ensure_array($files->{'file'})}) {
+	    push @files, glob($self->expand_parameters($fileref));
+	}
+    } else {
+	@files = glob($self->expand_parameters($modify->{'files'}));
+    }
+
+    return \@files;
+}
+
 sub step {
     my ($self, $step, $parentstep, $counter) = @_;
 
     foreach my $modify (@{$step->{'modifications'}[0]{'modify'}}) {
-	my @files = glob($self->expand_parameters($modify->{'files'}));
+	my $files = $self->get_files($modify);
 	my $findregex = $self->expand_parameters($modify->{'find'});
 	my $replaceregex = $self->expand_parameters($modify->{'replace'});
 
 	my $asub = eval "sub { s/$findregex/$replaceregex/; }";
 
-	foreach my $file (@files) {
+	foreach my $file (@$files) {
 
 	    $self->output("modifying $file\n");
 
@@ -51,8 +68,8 @@ sub document_step {
 	$self->output("  replacing: '$findregex' with: '$replaceregex'\n\n");
 	$self->output("  files:  glob=" .
 		      $self->expand_parameters($modify->{'files'}) . "\n");
-	my @files = glob($self->expand_parameters($modify->{'files'}));
-	foreach my $file (@files) {
+	my $files = $self->get_files($modify);
+	foreach my $file (@$files) {
 	    $self->output("    " . $file . "\n");
 	}
 	$self->output("\n");

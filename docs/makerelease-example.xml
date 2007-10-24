@@ -70,10 +70,12 @@
 	      replace="${1}{VERSION}"
 	      />
 	    <modify
-	      files="t/{VERSION}/*.txt"
 	      find="^([a-z]+\s*=\s*)([\.0-9]+)"
-	      replace="${1}{VERSION}"
-	      />
+	      replace="${1}{VERSION}">
+	      <files>
+		<file>t/{VERSION}/*.txt</file>
+	      </files>
+	    </modify>
 	  </modifications>
 	</step>
 
