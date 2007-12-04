@@ -15,6 +15,56 @@ sub new {
     return $self;
 }
 
+sub load_step {
+    my ($self, $step) = @_;
+    # make sure we can load it before bailing with -n
+    my $steptype = $step->{'type'};
+    my $steptypecap = $steptype;
+    $steptypecap =~ s/^(.)/uc($1)/e;
+    my $module = "Makerelease::Step::$steptypecap";
+    my $haveit = eval "require $module";
+    if (!$haveit) {
+	print STDERR
+	  "Could not load a module for release step type \"$steptype\";\n";
+	print STDERR
+	  "  Tried: $module\n";
+	print STDERR
+	  "  Error: $@\n";
+	die;
+    }
+
+    # create a module instance
+    my $stepmodule = eval "new $module";
+    if (!$stepmodule) {
+	print STDERR
+	  "Can't create an instance of the \"step\" module\n";
+	print STDERR
+	  "  Tried: $module\n";
+	print STDERR
+	  "  Error: $@\n";
+	die;
+    }
+
+    # auto-inherit some parameters
+    $stepmodule->{'opts'} = $self->{'opts'};
+    $stepmodule->{'parameters'} = $self->{'parameters'};
+    $stepmodule->{'master'} = $self;
+
+    return $stepmodule;
+}
+
+sub test_steps {
+    my ($self, $relinfo, $parentstep) = @_;
+    my $counter;
+    my $result = 0;
+    foreach my $step (@{$relinfo->{'steps'}[0]{'step'}}) {
+	$counter++;
+	my $stepmodule = $self->load_step($step);
+	$result = 1 if ($stepmodule->test($step, "$parentstep$counter"));
+    }
+    return $result;
+}
+
 sub process_steps {
     my ($self, $relinfo, $parentstep) = @_;
     my $counter;
@@ -24,39 +74,8 @@ sub process_steps {
 	# print the step header
 	$self->start_step("$parentstep$counter", $step->{'title'});
 
-	# make sure we can load it before bailing with -n
-	my $steptype = $step->{'type'};
-	my $steptypecap = $steptype;
-	$steptypecap =~ s/^(.)/uc($1)/e;
-	my $module = "Makerelease::Step::$steptypecap";
-	my $haveit = eval "require $module";
-	if (!$haveit) {
-	    print STDERR
-	      "Could not load a module for release step type \"$steptype\";\n";
-	    print STDERR
-	      "  Tried: $module\n";
-	    print STDERR
-	      "  Error: $@\n";
-	    die;
-	}
-
-	# create a module instance
-	my $stepmodule = eval "new $module";
-	if (!$stepmodule) {
-	    print STDERR
-	      "Can't create an instance of the \"step\" module\n";
-	    print STDERR
-	      "  Tried: $module\n";
-	    print STDERR
-	      "  Error: $@\n";
-	    die;
-	}
-
-	# auto-inherit some parameters
-	$stepmodule->{'opts'} = $self->{'opts'};
-	$stepmodule->{'parameters'} = $self->{'parameters'};
-	$stepmodule->{'master'} = $self;
-
+	my $stepmodule = $self->load_step($step);
+	
 	# print description of the step if it exists
 	$stepmodule->print_description($step);
 

@@ -13,6 +13,11 @@ sub possibly_skip_dryrun {
     return 0;
 }
 
+sub test {
+    my ($self, $step, $parentstep, $counter) = @_;
+    $self->{'master'}->test_steps($step, "$parentstep$counter.");
+}
+
 sub step {
     my ($self, $step, $parentstep, $counter) = @_;
 

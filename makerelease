@@ -18,6 +18,7 @@ LocalGetOptions(\%opts,
 	   ['p|parameters=s',         'Parameters: parameter=value,...'],
 	   ['i|interactive',          'Prompt whether to do each step'],
  	   ['n|dry-run',     'Dry run only.  Don\'t actually do anything.'],
+ 	   ['t|test-only',            'Only test the configuration file.'],
 	   ['v|verbose',     'Verbose output about steps taken.'],
 	   ['h|help', 'Help']) || exit;
 
@@ -49,6 +50,12 @@ my $relinfo = XMLin($opts{'c'},
 ######################################################################
 # Process steps
 my $makerelease = new Makerelease(opts => \%opts, parameters => \%parameters);
+if ($makerelease->test_steps($relinfo,'')) {
+    print STDERR
+      "Can not continue; release step instructions contained errors\n";
+    exit 1;
+}
+exit 0 if ($opts{'t'});
 $makerelease->process_steps($relinfo,'');
 
 

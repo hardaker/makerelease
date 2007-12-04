@@ -85,5 +85,10 @@ sub expand_parameters {
     return $string;
 }
 
+sub test {
+    my ($self) = @_;
+    return 0;
+}
+
 1;
 
