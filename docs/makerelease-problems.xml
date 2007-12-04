@@ -1,0 +1,29 @@
+<makerelease>
+  <steps>
+
+    <step type="system" title="no commands">
+    </step>
+    <step type="system" title="no commands inside commands">
+      <commands>
+      </commands>
+    </step>
+
+    <step type="section" title="no steps">
+    </step>
+    <step type="section" title="no steps inside steps">
+      <steps>
+      </steps>
+    </step>
+
+    <step type="section" title="no steps">
+    </step>
+    <step type="section" title="no steps inside steps">
+      <steps>
+	<step type="system" title="no commands inside a sub-step">
+	</step>
+      </steps>
+    </step>
+
+
+  </steps>
+</makerelease>

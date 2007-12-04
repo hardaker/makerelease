@@ -20,6 +20,13 @@ sub get_command_string {
     return $self->expand_parameters($command);
 }
 
+sub test {
+    my ($self, $step, $parentstep, $counter) = @_;
+    return 1 if ($self->require_piece($step, $parentstep, $counter,
+				      'commands', 'command'));
+    return 0;
+}
+
 sub step {
     my ($self, $step, $parentstep, $counter) = @_;
 

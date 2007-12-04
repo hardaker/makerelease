@@ -90,5 +90,27 @@ sub test {
     return 0;
 }
 
+sub WARN {
+    my ($self, $step, @args) = @_;
+    use Data::Dumper;;
+    print STDERR "WARNING: step: '$step->{'title'}'\n";
+    print STDERR "WARNING: " . join("",@args) . "\n\n";
+    return 1;
+}
+
+sub require_piece {
+    my ($self, $step, $parentstep, $counter, $nametop, $namebot) = @_;
+    return $self->WARN($step, "No $nametop section in this step")
+      if (!exists($step->{$nametop}) ||
+	  ref($step->{$nametop}) ne 'ARRAY' ||
+	  $#{$step->{$nametop}} == -1);
+    return 0 if (!$namebot);
+    return $self->WARN($step, "No '$nametop' sections inside '${namebot}' in this step")
+      if (!exists($step->{$nametop}[0]{$namebot}) ||
+	  ref($step->{$nametop}[0]{$namebot}) ne 'ARRAY' ||
+	  $#{$step->{$nametop}[0]{$namebot}} == -1);
+    return 0;
+}
+
 1;
 

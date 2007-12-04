@@ -15,7 +15,9 @@ sub possibly_skip_dryrun {
 
 sub test {
     my ($self, $step, $parentstep, $counter) = @_;
-    $self->{'master'}->test_steps($step, "$parentstep$counter.");
+    return 1 if ($self->require_piece($step, $parentstep, $counter,
+				      'steps', 'step'));
+    return $self->{'master'}->test_steps($step, "$parentstep$counter.");
 }
 
 sub step {
