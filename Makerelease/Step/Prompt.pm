@@ -8,6 +8,15 @@ our $VERSION = "0.1";
 
 our @ISA=qw(Makerelease::Step);
 
+sub test {
+    my ($self, $step, $parentstep, $counter) = @_;
+    my $ret = 0;
+    $ret = 1 if ($self->require_piece($step, $parentstep, $counter, 'piece'));
+    $ret = 1 if ($self->require_piece($step, $parentstep, $counter,
+				      'parameter'));
+    return $ret;
+}
+
 sub step {
     my ($self, $step, $parentstep, $counter) = @_;
 

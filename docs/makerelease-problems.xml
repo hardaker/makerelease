@@ -24,6 +24,26 @@
       </steps>
     </step>
 
+    <step type="modify" title="modify test">
+    </step>
+
+    <step type="modify" title="modify test">
+      <modifications>
+      </modifications>
+    </step>
+
+    <step type="modify" title="modify test">
+      <modifications>
+	<modify>
+	</modify>
+      </modifications>
+    </step>
+
+    <step type="modify" title="modify test">
+    </step>
+
+    <step type="prompt" title="prompt test">
+    </step>
 
   </steps>
 </makerelease>

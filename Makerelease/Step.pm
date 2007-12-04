@@ -100,12 +100,12 @@ sub WARN {
 
 sub require_piece {
     my ($self, $step, $parentstep, $counter, $nametop, $namebot) = @_;
-    return $self->WARN($step, "No $nametop section in this step")
+    return $self->WARN($step, "No '$nametop' section in this step")
       if (!exists($step->{$nametop}) ||
 	  ref($step->{$nametop}) ne 'ARRAY' ||
 	  $#{$step->{$nametop}} == -1);
     return 0 if (!$namebot);
-    return $self->WARN($step, "No '$nametop' sections inside '${namebot}' in this step")
+    return $self->WARN($step, "No '$namebot' sections inside '${nametop}' in this step")
       if (!exists($step->{$nametop}[0]{$namebot}) ||
 	  ref($step->{$nametop}[0]{$namebot}) ne 'ARRAY' ||
 	  $#{$step->{$nametop}[0]{$namebot}} == -1);

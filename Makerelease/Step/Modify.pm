@@ -25,6 +25,26 @@ sub get_files {
     return \@files;
 }
 
+sub test {
+    my ($self, $step, $parentstep, $counter) = @_;
+    return 1 if ($self->require_piece($step, $parentstep, $counter,
+				      'modifications', 'modify'));
+    my $result = 0;
+    for (my $i = 0; $i <= $#{$step->{'modifications'}[0]{'modify'}}; $i++) {
+	$result = 
+	  $self->WARN($step, "modification #$i contains no find clause")
+	    if (!exists($step->{'modifications'}[0]{'modify'}[$i]{'find'}) ||
+		$step->{'modifications'}[0]{'modify'}[$i]{'find'} eq '');
+	$result = 
+	  $self->WARN($step, "modification #$i contains no replace clause")
+	    if (!exists($step->{'modifications'}[0]{'modify'}[$i]{'replace'}) ||
+		$step->{'modifications'}[0]{'modify'}[$i]{'replace'} eq '');
+	$result = 1
+	  if ($self->require_piece($step->{'modifications'}[0]{'modify'}[$i],
+				   $parentstep, $counter, 'files', 'file'));
+    }
+}
+
 sub step {
     my ($self, $step, $parentstep, $counter) = @_;
 
