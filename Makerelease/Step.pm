@@ -14,7 +14,8 @@ sub start_step {
 sub possibly_skip_yn {
     my ($self, $step, $parentstep, $counter) = @_;
 
-    if ($self->{'opts'}{'i'} || $step->{'interactive'}) {
+    if (!$self->{'opts'}{'n'} &&
+	($self->{'opts'}{'i'} || $step->{'interactive'})) {
 	my $info = $self->getinput("Do step $parentstep$counter (y,n,q)?");
 	if ($info eq 'q') {
 	    $self->output("... quitting as requested\n");
@@ -100,15 +101,23 @@ sub WARN {
 
 sub require_piece {
     my ($self, $step, $parentstep, $counter, $nametop, $namebot) = @_;
-    return $self->WARN($step, "No '$nametop' section in this step")
+    return $self->WARN($step, "No '$nametop' element in this step")
       if (!exists($step->{$nametop}) ||
 	  ref($step->{$nametop}) ne 'ARRAY' ||
 	  $#{$step->{$nametop}} == -1);
     return 0 if (!$namebot);
-    return $self->WARN($step, "No '$namebot' sections inside '${nametop}' in this step")
+    return $self->WARN($step, "No '$namebot' element inside '${nametop}' in this step")
       if (!exists($step->{$nametop}[0]{$namebot}) ||
 	  ref($step->{$nametop}[0]{$namebot}) ne 'ARRAY' ||
 	  $#{$step->{$nametop}[0]{$namebot}} == -1);
+    return 0;
+}
+
+sub require_attribute {
+    my ($self, $step, $parentstep, $counter, $nametop, $namebot) = @_;
+    return $self->WARN($step, "No '$nametop' attribute in this step")
+      if (!exists($step->{$nametop}) ||
+	  ref($step->{$nametop}) eq 'ARRAY');
     return 0;
 }
 
