@@ -37,8 +37,9 @@ sub document_step {
     my ($self, $step, $parentstep, $counter) = @_;
 
     $self->output("Decide on a value for parameter '$step->{parameter}'\n");
-    $self->output("  prompt: $step->{parameter}\n");
-    $self->output("  legal:  $step->{values}\n") if ($self->{'values'});
+    $self->output("  parameter: $step->{parameter}\n");
+    $self->output("  prompt:    $step->{prompt}\n");
+    $self->output("  legal:     $step->{values}\n") if ($self->{'values'});
 }
 
 1;

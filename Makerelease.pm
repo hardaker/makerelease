@@ -94,12 +94,12 @@ sub process_steps {
 
 sub start_step {
     my ($self, $vernum, $vername) = @_;
-    print STDERR "\n********** STEP: $vernum: $vername **********\n";
+    $self->output("\n********** STEP: $vernum: $vername **********\n");
 }
 
 sub getinput {
     my ($self, $prompt) = @_;
-    print "$prompt " if ($prompt);
+    $self->output("$prompt ") if ($prompt);
     my $bogus = <STDIN>;
     chomp($bogus);
     return $bogus;
@@ -108,7 +108,7 @@ sub getinput {
 sub DEBUG {
     my ($self, @args) = @_;
     if ($self->{'opts'}{'v'}) {
-	print STDERR @args;
+	$self->output(@args);
     }
 }
 

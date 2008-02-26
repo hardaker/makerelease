@@ -54,7 +54,7 @@ sub print_description {
     my ($self, $step) = @_;
     my $text = $self->expand_parameters($step->{'text'});
     $text =~ s/\n\s*$//g;
-    print $text, "\n\n" if ($text);
+    $self->output($text, "\n\n") if ($text);
 }
 
 sub finish_step {
