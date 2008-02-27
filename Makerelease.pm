@@ -106,7 +106,7 @@ sub start_step {
 
 sub getinput {
     my ($self, $prompt) = @_;
-    $self->output("$prompt ") if ($prompt);
+    $self->output_raw("$prompt ") if ($prompt);
     my $bogus = <STDIN>;
     chomp($bogus);
     return $bogus;
@@ -121,8 +121,16 @@ sub DEBUG {
 
 sub output {
     my $self = shift;
+    my @text = @_;
+    my @output;
+
     if ($havewrap) {
-	print STDERR wrap("  ", "  ", @_),"\n";
+	foreach my $text (@text) {
+	    foreach my $section (split(/\n\n/,$text)) {
+		push @output, wrap("  ", "  ", $section);
+	    }
+	}
+	print STDERR join("\n\n",@output),"\n\n";
     } else {
 	print STDERR "  ",@_;
     }

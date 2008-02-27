@@ -37,8 +37,11 @@ sub step {
 		
 	while ($status ne '0') {
 
-	    $self->output("evaluating specified perl code\n\n");
+	    $self->output("evaluating specified perl code");
 	    $status = eval $code;
+	    if ($@) {
+		print STDERR "error evaluating code in Step $parentstep$counter: $@\n";
+	    }
 
 	    if ($status ne 0 ) {
 		# command failed, prompt for what to do?
@@ -54,12 +57,12 @@ sub step {
 		    if ($dowhat eq 'c') {
 			$status = 0;
 		    } elsif ($dowhat eq 'q') {
-			$self->output("Quitting at step '$parentstep$counter' as requested\n");
+			$self->output("Quitting at step '$parentstep$counter' as requested");
 			exit 1;
 		    } elsif ($dowhat eq 'r') {
-			$self->output("-- re-running ----------\n");
+			$self->output("-- re-running ----------");
 		    } else {
-			$self->output("unknown response: $dowhat\n");
+			$self->output("unknown response: $dowhat");
 			$dowhat = '';
 		    }
 		}
@@ -72,7 +75,7 @@ sub step {
 sub document_step {
     my ($self, $step, $parentstep, $counter) = @_;
 
-    $self->output("Internal perl code will be executed\n");
+    $self->output("Internal perl code will be executed");
 }
 
 1;

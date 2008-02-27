@@ -57,7 +57,7 @@ sub step {
 
 	foreach my $file (@$files) {
 
-	    $self->output("modifying $file\n");
+	    $self->output("modifying $file");
 
 	    my $in = new IO::File();
 	    my $out = new IO::File();
@@ -84,15 +84,15 @@ sub document_step {
     foreach my $modify (@{$step->{'modifications'}[0]{'modify'}}) {
 	my $findregex = $self->expand_parameters($modify->{'find'});
 	my $replaceregex = $self->expand_parameters($modify->{'replace'});
-	$self->output("Modifying files:\n");
-	$self->output("  replacing: '$findregex' with: '$replaceregex'\n\n");
+	$self->output("Modifying files:");
+	$self->output("  replacing: '$findregex' with: '$replaceregex'\n");
 	$self->output("  files:  glob=" .
-		      $self->expand_parameters($modify->{'files'}) . "\n");
+		      $self->expand_parameters($modify->{'files'}));
 	my $files = $self->get_files($modify);
 	foreach my $file (@$files) {
-	    $self->output("    " . $file . "\n");
+	    $self->output("    " . $file);
 	}
-	$self->output("\n");
+	$self->output("");
     }
 }
 

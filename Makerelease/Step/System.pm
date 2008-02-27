@@ -17,6 +17,8 @@ sub get_command_string {
     } else {
 	$command = $commandstart;
     }
+    $command =~ s/^\s*//;
+    $command =~ s/\s*$//;
     return $self->expand_parameters($command);
 }
 
@@ -43,7 +45,7 @@ sub step {
 
 	    my $cmdstr = $self->get_command_string($command);
 
-	    $self->output("running '",$cmdstr,"'\n\n");
+	    $self->output("running '$cmdstr'");
 	    system("$cmdstr");
 	    $status = $?;
 	    $status = 0 if ($ignoreerror);
@@ -62,17 +64,17 @@ sub step {
 		    if ($dowhat eq 'c') {
 			$status = 0;
 		    } elsif ($dowhat eq 'q') {
-			$self->output("Quitting at step '$parentstep$counter' as requested\n");
+			$self->output("Quitting at step '$parentstep$counter' as requested");
 			exit 1;
 		    } elsif ($dowhat eq 'r') {
-			$self->output("-- re-running ----------\n");
+			$self->output("-- re-running ----------");
 		    } else {
-			$self->output("unknown response: $dowhat\n");
+			$self->output("unknown response: $dowhat");
 			$dowhat = '';
 		    }
 		}
 	    }
-	    $self->output("\n");
+	    $self->output("");
 	}
     }
 }
@@ -80,9 +82,9 @@ sub step {
 sub document_step {
     my ($self, $step, $parentstep, $counter) = @_;
 
-    $self->output("Commands to execute:\n");
+    $self->output("Commands to execute:");
     foreach my $command (@{$step->{'commands'}[0]{'command'}}) {
-	$self->output("  " . $self->get_command_string($command) . "\n");
+	$self->output("  " . $self->get_command_string($command));
     }
 }
 

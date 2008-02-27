@@ -25,7 +25,7 @@ sub step {
 	$done = 1;
 	$answer = $self->getinput($step->{'prompt'});
 	if ($step->{'values'} && $answer !~ $step->{'values'}) {
-	    $self->output("Illegal value; must match: $step->{'values'}\n");
+	    $self->output("Illegal value; must match: $step->{'values'}");
 	    $done = 0;
 	}
     }
@@ -35,10 +35,10 @@ sub step {
 sub document_step {
     my ($self, $step, $parentstep, $counter) = @_;
 
-    $self->output("Decide on a value for parameter '$step->{parameter}'\n");
-    $self->output("  parameter: $step->{parameter}\n");
-    $self->output("  prompt:    $step->{prompt}\n");
-    $self->output("  legal:     $step->{values}\n") if ($self->{'values'});
+    $self->output("Decide on a value for parameter '$step->{parameter}'");
+    $self->output("  parameter: $step->{parameter}");
+    $self->output("  prompt:    $step->{prompt}");
+    $self->output("  legal:     $step->{values}") if ($self->{'values'});
 }
 
 1;

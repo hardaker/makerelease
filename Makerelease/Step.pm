@@ -15,7 +15,7 @@ sub possibly_skip_yn {
     my ($self, $step, $parentstep, $counter) = @_;
 
     if ($self->{'opts'}{'n'}) {
-	$self->output("(Pause here to ensure the operator wishes to perform the step)\n");
+	$self->output("(Pause here to ensure the operator wishes to perform the step)");
     }
     if ($self->{'opts'}{'i'} || $step->{'interactive'}) {
 	my $info = $self->getinput("Do step $parentstep$counter (y,n,q)?");
@@ -95,8 +95,9 @@ sub expand_text {
 
     $string = $self->expand_parameters($string);
     $string =~ s/^\s*//;
-    $string =~ s/([\n\r]+)[ \t]*/ /gm;
-
+    $string =~ s/([^\n\r])\r*\n[ \t]+/$1 /gm;
+    $string =~ s/\r*\n\r*\n[ \t]+/\n\n/gm;
+    $string =~ s/\s*$//;
     return $string;
 }
 

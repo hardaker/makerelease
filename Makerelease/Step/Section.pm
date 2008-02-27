@@ -25,9 +25,9 @@ sub step {
 
     # XXX: should we call this on the parent module instead of our
     # own?  Probably...
-    $self->output("\n===== Entering Step: $parentstep$counter =====\n");
+    $self->output("===== Entering Step: $parentstep$counter =====");
     $self->{'master'}->process_steps($step, "$parentstep$counter.");
-    $self->output("\n(Leaving Step: $parentstep$counter)\n");
+    $self->output("(Leaving Step: $parentstep$counter)");
     # step does nothing other than print things already handled by the parent
     return;
 }
