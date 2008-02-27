@@ -45,7 +45,9 @@ if (!-f $opts{'c'}) {
 my $relinfo = XMLin($opts{'c'},
 		    #XXX: should probably forcearray => 1 for everything
 		    ForceArray => [qw(steps step commands command
-				      modifications modify)]);
+				      modifications modify
+				      perl code files file
+				     )]);
 
 ######################################################################
 # Process steps
