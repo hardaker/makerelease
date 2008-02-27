@@ -14,8 +14,10 @@ sub start_step {
 sub possibly_skip_yn {
     my ($self, $step, $parentstep, $counter) = @_;
 
-    if (!$self->{'opts'}{'n'} &&
-	($self->{'opts'}{'i'} || $step->{'interactive'})) {
+    if ($self->{'opts'}{'n'}) {
+	$self->output("(Pause here to ensure the operator wishes to perform the step)\n");
+    }
+    if ($self->{'opts'}{'i'} || $step->{'interactive'}) {
 	my $info = $self->getinput("Do step $parentstep$counter (y,n,q)?");
 	if ($info eq 'q') {
 	    $self->output("... quitting as requested\n");
@@ -53,7 +55,7 @@ sub possibly_skip {
 
 sub print_description {
     my ($self, $step) = @_;
-    my $text = $self->expand_parameters($step->{'text'});
+    my $text = $self->expand_text($step->{'text'});
     $text =~ s/\n\s*$//g;
     $self->output($text, "\n\n") if ($text);
 }
@@ -81,8 +83,20 @@ sub document_step {
 sub expand_parameters {
     my ($self, $string) = @_;
 
+    return $string if ($self->{'opts'}{'n'});
     # ignore {} sets with a leading $
     $string =~ s/([^\$]){([^\}]+)}/$1$self->{'parameters'}{$2}/g;
+    return $string;
+}
+
+# also tries to clean up newline->spaces blocks
+sub expand_text {
+    my ($self, $string) = @_;
+
+    $string = $self->expand_parameters($string);
+    $string =~ s/^\s*//;
+    $string =~ s/([\n\r]+)[ \t]*/ /gm;
+
     return $string;
 }
 

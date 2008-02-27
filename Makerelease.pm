@@ -4,6 +4,13 @@ use strict;
 
 our $VERSION = "0.1";
 
+# conditionally use Text::Wrap
+my $havewrap = eval { require Text::Wrap; };
+if ($havewrap) {
+    import Text::Wrap qw(wrap);
+}
+
+
 # note: this new clause is used by most sub-modules too, altering it
 # will alter them.
 sub new {
@@ -94,7 +101,7 @@ sub process_steps {
 
 sub start_step {
     my ($self, $vernum, $vername) = @_;
-    $self->output("\n********** STEP: $vernum: $vername **********\n");
+    $self->output_raw("STEP: $vernum: $vername\n\n");
 }
 
 sub getinput {
@@ -114,7 +121,16 @@ sub DEBUG {
 
 sub output {
     my $self = shift;
-    print STDERR "  ",@_;
+    if ($havewrap) {
+	print STDERR wrap("  ", "  ", @_),"\n";
+    } else {
+	print STDERR "  ",@_;
+    }
+}
+
+sub output_raw {
+    my $self = shift;
+    print STDERR @_;
 }
 
 sub ensure_array {
