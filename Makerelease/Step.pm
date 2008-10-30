@@ -69,8 +69,8 @@ sub finish_step {
     my ($self, $step, $parentstep, $counter) = @_;
 
     # maybe sleep if we're not pausing
-    if (!$self->{'opts'}{'p'} && !$step->{'pause'}) {
-	sleep($self->{'opts'}{'s'}) if ($self->{'opts'}{'s'});
+    if (!$self->{'opts'}{'n'} && !$step->{'pause'}) {
+	sleep($self->{'opts'}{'S'}) if ($self->{'opts'}{'S'});
 	return;
     }
 
