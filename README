@@ -16,3 +16,7 @@ HISTORY
 
   The makerelease script derives in concept from one that was used to
   simplify and standardize the process of releasing the Net-SNMP package.
+
+DOCUMENTATION
+
+  See the DOCUMENTATION.org or DOCUMENTATION.html files
