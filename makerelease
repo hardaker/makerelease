@@ -18,6 +18,7 @@ LocalGetOptions(\%opts,
 	   ['p|parameters=s',         'Parameters: parameter=value,...'],
 	   ['i|interactive',          'Prompt whether to do each step'],
  	   ['n|dry-run',     'Dry run only.  Don\'t actually do anything.'],
+ 	   ['T|list-toc',     'Just print a step Table-of-Contents.'],
  	   ['t|test-only',            'Only test the configuration file.'],
 	   ['v|verbose',     'Verbose output about steps taken.'],
 	   ['h|help', 'Help']) || exit;
@@ -58,6 +59,10 @@ if ($makerelease->test_steps($relinfo,'')) {
     exit 1;
 }
 exit 0 if ($opts{'t'});
+if ($opts{'T'}) {
+    $makerelease->print_toc($relinfo,'');
+    exit;
+}
 $makerelease->process_steps($relinfo,'');
 
 

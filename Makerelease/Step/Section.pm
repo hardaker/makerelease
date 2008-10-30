@@ -32,5 +32,13 @@ sub step {
     return;
 }
 
+sub print_toc_header {
+    my ($self, $step, $parentstep, $counter) = @_;
+    $self->output_raw(sprintf("%-15.15s %s\n",
+			      "$parentstep$counter", $step->{title}));
+    $self->{'master'}->print_toc($step, " $parentstep$counter.");
+}
+
+
 1;
 

@@ -14,12 +14,19 @@ sub get_files {
     my @files;
 
     my $files = $modify->{'files'};
+
+    # XXX: fix this...  should be more accepting
+    if (ref($files) eq 'ARRAY') {
+	$files = $files->[0];
+    }
     if (ref($files) eq 'HASH') {
 	foreach my $fileref (@{$self->ensure_array($files->{'file'})}) {
 	    push @files, glob($self->expand_parameters($fileref));
 	}
     } else {
-	@files = glob($self->expand_parameters($modify->{'files'}));
+	foreach my $fileref ($self->expand_parameters($modify->{'files'})) {
+	    push @files, glob($fileref);
+	}
     }
 
     return \@files;

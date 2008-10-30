@@ -99,6 +99,52 @@ sub process_steps {
     }
 }
 
+sub print_toc {
+    my ($self, $relinfo, $parentstep) = @_;
+    my $counter;
+    foreach my $step (@{$relinfo->{'steps'}[0]{'step'}}) {
+	$counter++;
+
+	my $stepmodule = $self->load_step($step);
+	
+	# print the step header
+	$stepmodule->print_toc_header($step, $parentstep, $counter);
+    }
+}
+
+sub print_toc_header {
+    my ($self, $step, $parentstep, $counter) = @_;
+    $self->output_raw(sprintf("%-15.15s %s\n",
+			      "$parentstep$counter", $step->{title}));
+}
+
+sub process_steps {
+    my ($self, $relinfo, $parentstep) = @_;
+    my $counter;
+    foreach my $step (@{$relinfo->{'steps'}[0]{'step'}}) {
+	$counter++;
+
+	# print the step header
+	$self->start_step("$parentstep$counter", $step->{'title'});
+
+	my $stepmodule = $self->load_step($step);
+	
+	# print description of the step if it exists
+	$stepmodule->print_description($step);
+
+	next if ($stepmodule->possibly_skip($step, $parentstep, $counter));
+
+	# XXX: skip up to step based on number here
+
+	# XXX: skip up to step based on nmae here
+
+	$self->DEBUG("processing step: $parentstep.$counter: type=$step->{'type'}\n");
+
+	$stepmodule->step($step, $parentstep, $counter);
+	$stepmodule->finish_step($step, $parentstep, $counter);
+    }
+}
+
 sub start_step {
     my ($self, $vernum, $vername) = @_;
     $self->output_raw("STEP: $vernum: $vername\n\n");

@@ -49,8 +49,13 @@ sub possibly_skip {
     # handle -n
     return 1 if ($self->possibly_skip_dryrun(@_));
 
+    # handle mandatory steps
+    return 0 if ($step->{'mandatory'});
+
     # handle -i
     return $self->possibly_skip_yn(@_);
+
+    return 0;
 }
 
 sub print_description {
