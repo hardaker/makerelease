@@ -22,6 +22,7 @@ sub new {
     return $self;
 }
 
+# this loads the needed perl module (dynamically) for a given step
 sub load_step {
     my ($self, $step) = @_;
     # make sure we can load it before bailing with -n

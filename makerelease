@@ -11,6 +11,12 @@ my %opts = (c => "makerelease.xml");
 my %parameters;
 my $descr;
 
+#XXX: should probably forcearray => 1 for everything
+our @XMLinopts = (ForceArray => [qw(steps step commands command
+				    modifications modify
+				    perl code files file
+				   )]);
+
 LocalGetOptions(\%opts,
 	   ['c|config-file=s',        'makerelease xml config file to use'],
 	   ['r|regexp-ignore-steps=s','Ignore these REGEXP steps'],
@@ -44,12 +50,7 @@ if (!-f $opts{'c'}) {
     exit 1;
 }
 
-my $relinfo = XMLin($opts{'c'},
-		    #XXX: should probably forcearray => 1 for everything
-		    ForceArray => [qw(steps step commands command
-				      modifications modify
-				      perl code files file
-				     )]);
+my $relinfo = XMLin($opts{'c'},	@XMLinopts);
 
 ######################################################################
 # Process steps
