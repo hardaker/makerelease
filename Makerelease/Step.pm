@@ -16,6 +16,7 @@ sub possibly_skip_yn {
 
     if ($self->{'opts'}{'n'}) {
 	$self->output("(Pause here to ensure the operator wishes to perform the step)");
+	return 1;
     }
     if ($self->{'opts'}{'i'} || $step->{'interactive'}) {
 	my $info = $self->getinput("Do step $parentstep$counter (y,n,q)?");
