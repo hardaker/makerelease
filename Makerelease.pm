@@ -2,7 +2,7 @@ package Makerelease;
 
 use strict;
 
-our $VERSION = "0.1";
+our $VERSION = '0.1';
 
 # conditionally use Text::Wrap
 my $havewrap = eval { require Text::Wrap; };

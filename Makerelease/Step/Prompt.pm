@@ -4,7 +4,7 @@ use strict;
 use Makerelease::Step;
 use IO::File;
 
-our $VERSION = "0.1";
+our $VERSION = '0.1';
 
 our @ISA=qw(Makerelease::Step);
 

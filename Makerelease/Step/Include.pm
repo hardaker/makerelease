@@ -5,7 +5,7 @@ use Makerelease::Step;
 use Makerelease::Step::Section;
 use XML::Simple;
 
-our $VERSION = "0.1";
+our $VERSION = '0.1';
 
 # includes are really just a special type of Section
 our @ISA=qw(Makerelease::Step::Section);

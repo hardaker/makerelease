@@ -3,7 +3,7 @@ package Makerelease::Step::Section;
 use strict;
 use Makerelease::Step;
 
-our $VERSION = "0.1";
+our $VERSION = '0.1';
 
 our @ISA=qw(Makerelease::Step);
 

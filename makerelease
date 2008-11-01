@@ -5,7 +5,7 @@ use XML::Simple;
 use Data::Dumper;
 use Makerelease;
 
-our $VERSION = "0.1";
+our $VERSION = '0.1';
 
 my %opts = (c => "makerelease.xml");
 my %parameters;
