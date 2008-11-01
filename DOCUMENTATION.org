@@ -1,5 +1,13 @@
 Make Release
 
+* Project Details
+
+#+BEGIN_VERSE
+  Download:    [[http://sourceforge.net/svn/?group_id=206082currently][via SVN only]]
+  Website:     [[http://makerelease.sourceforge.net/][makerelease]]
+  SF Project:  [[http://sourceforge.net/projects/makerelease/][makerelease]]  
+#+END_VERSE
+
 * Introduction and History
 *** Release Pain
 
@@ -107,7 +115,7 @@ Make Release
   Step specific.
 
 *** Global Attributes and Data
-***** text
+***** <text>foo</text>
 
       The /<text>/ section is used to describe a particular step for
       documentational purposes.  It is output both to the operator
@@ -246,9 +254,6 @@ Make Release
    (Leaving Step: 1)
 #+END_EXAMPLE
 
-
-----------
-#+OPTIONS: author-info:nil
 ***** Include
 
       An /include/ directive is functionally the same as a /section/
@@ -372,3 +377,14 @@ Make Release
 	</step>
 #+END_EXAMPLE
 
+* Examples
+*** Projects that are making use of makerelease scripts (in the "dist"
+    subdirectory if not otherwise specified):
+***** [[http://www.net-snmp.org/][Net-SNMP]]
+***** [[http://www.dnssec-tools.org/][DNSSEC-Tools]]
+***** [[http://www.geoqo.org/][GeoQO]]
+*** Included example scripts
+***** Coming soon...
+
+
+----------

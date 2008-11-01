@@ -6,7 +6,7 @@ lang="en" xml:lang="en">
 <title>Make Release</title>
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2008-11-01 14:38:29 PDT"/>
+<meta name="generated" content="2008-11-01 14:54:14 PDT"/>
 <meta name="author" content="Wes Hardaker"/>
 <style type="text/css">
   html { font-family: Times, serif; font-size: 12pt; }
@@ -45,39 +45,55 @@ lang="en" xml:lang="en">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1 Introduction and History</a>
+<li><a href="#sec-1">1 Project Details</a></li>
+<li><a href="#sec-2">2 Introduction and History</a>
 <ul>
-<li><a href="#sec-1.1">1.1 Release Pain</a></li>
-<li><a href="#sec-1.2">1.2 The solution: makerelease</a></li>
+<li><a href="#sec-2.1">2.1 Release Pain</a></li>
+<li><a href="#sec-2.2">2.2 The solution: makerelease</a></li>
 </ul>
 </li>
-<li><a href="#sec-2">2 Usage</a>
+<li><a href="#sec-3">3 Usage</a>
 <ul>
-<li><a href="#sec-2.1">2.1 Step by Step</a></li>
-<li><a href="#sec-2.2">2.2 Structured in XML</a></li>
-<li><a href="#sec-2.3">2.3 makerelease -n: dry-run and produce documentation</a></li>
-<li><a href="#sec-2.4">2.4 makerelease:</a></li>
+<li><a href="#sec-3.1">3.1 Step by Step</a></li>
+<li><a href="#sec-3.2">3.2 Structured in XML</a></li>
+<li><a href="#sec-3.3">3.3 makerelease -n: dry-run and produce documentation</a></li>
+<li><a href="#sec-3.4">3.4 makerelease:</a></li>
 </ul>
 </li>
-<li><a href="#sec-3">3 Writing Steps</a>
+<li><a href="#sec-4">4 Writing Steps</a>
 <ul>
-<li><a href="#sec-3.1">3.1 Global Attributes and Data</a>
+<li><a href="#sec-4.1">4.1 Global Attributes and Data</a>
 <ul>
-<li><a href="#sec-3.1.1">3.1.1 text</a></li>
-<li><a href="#sec-3.1.2">3.1.2 title="Title for the Step"</a></li>
-<li><a href="#sec-3.1.3">3.1.3 stepname="name"</a></li>
-<li><a href="#sec-3.1.4">3.1.4 pause="true"</a></li>
+<li><a href="#sec-4.1.1">4.1.1 &lt;text&gt;foo&lt;/text&gt;</a></li>
+<li><a href="#sec-4.1.2">4.1.2 title="Title for the Step"</a></li>
+<li><a href="#sec-4.1.3">4.1.3 stepname="name"</a></li>
+<li><a href="#sec-4.1.4">4.1.4 pause="true"</a></li>
 </ul>
 </li>
-<li><a href="#sec-3.2">3.2 Step Types</a>
+<li><a href="#sec-4.2">4.2 Step Types</a>
 <ul>
-<li><a href="#sec-3.2.1">3.2.1 Informational</a></li>
-<li><a href="#sec-3.2.2">3.2.2 Section</a></li>
-<li><a href="#sec-3.2.3">3.2.3 Include</a></li>
-<li><a href="#sec-3.2.4">3.2.4 System</a></li>
-<li><a href="#sec-3.2.5">3.2.5 Prompt</a></li>
-<li><a href="#sec-3.2.6">3.2.6 Modify</a></li>
-<li><a href="#sec-3.2.7">3.2.7 Perl</a></li>
+<li><a href="#sec-4.2.1">4.2.1 Informational</a></li>
+<li><a href="#sec-4.2.2">4.2.2 Section</a></li>
+<li><a href="#sec-4.2.3">4.2.3 Include</a></li>
+<li><a href="#sec-4.2.4">4.2.4 System</a></li>
+<li><a href="#sec-4.2.5">4.2.5 Prompt</a></li>
+<li><a href="#sec-4.2.6">4.2.6 Modify</a></li>
+<li><a href="#sec-4.2.7">4.2.7 Perl</a></li>
+</ul></li>
+</ul>
+</li>
+<li><a href="#sec-5">5 Examples</a>
+<ul>
+<li><a href="#sec-5.1">5.1 Projects that are making use of makerelease scripts (in the "dist"</a>
+<ul>
+<li><a href="#sec-5.1.1">5.1.1 Net-SNMP</a></li>
+<li><a href="#sec-5.1.2">5.1.2 DNSSEC-Tools</a></li>
+<li><a href="#sec-5.1.3">5.1.3 GeoQO</a></li>
+</ul>
+</li>
+<li><a href="#sec-5.2">5.2 Included example scripts</a>
+<ul>
+<li><a href="#sec-5.2.1">5.2.1 Coming soon&hellip;</a></li>
 </ul>
 </li>
 </ul>
@@ -87,15 +103,32 @@ lang="en" xml:lang="en">
 </div>
 
 <div id="outline-container-1" class="outline-2">
-<h2 id="sec-1">1 Introduction and History</h2>
+<h2 id="sec-1">1 Project Details</h2>
 <div id="text-1">
+
+
+<p>
+
+<p class="verse">
+&nbsp;&nbsp;&nbsp;&nbsp; Download:    <a href="http://sourceforge.net/svn/?group_id=206082currently">via SVN only</a> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp; Website:     <a href="http://makerelease.sourceforge.net/">makerelease</a> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp; SF Project:  <a href="http://sourceforge.net/projects/makerelease/">makerelease</a> <br/>
+</p>
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">2 Introduction and History</h2>
+<div id="text-2">
 
 
 </div>
 
-<div id="outline-container-1.1" class="outline-3">
-<h3 id="sec-1.1">1.1 Release Pain</h3>
-<div id="text-1.1">
+<div id="outline-container-2.1" class="outline-3">
+<h3 id="sec-2.1">2.1 Release Pain</h3>
+<div id="text-2.1">
 
 
 <p>
@@ -136,9 +169,9 @@ documentation lags behind the script, the expert operator or both.
 
 </div>
 
-<div id="outline-container-1.2" class="outline-3">
-<h3 id="sec-1.2">1.2 The solution: makerelease</h3>
-<div id="text-1.2">
+<div id="outline-container-2.2" class="outline-3">
+<h3 id="sec-2.2">2.2 The solution: makerelease</h3>
+<div id="text-2.2">
 
 
 <p>
@@ -175,16 +208,16 @@ Steps can be grouped together (e.g. "preparing", "packaging",
 
 </div>
 
-<div id="outline-container-2" class="outline-2">
-<h2 id="sec-2">2 Usage</h2>
-<div id="text-2">
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">3 Usage</h2>
+<div id="text-3">
 
 
 </div>
 
-<div id="outline-container-2.1" class="outline-3">
-<h3 id="sec-2.1">2.1 Step by Step</h3>
-<div id="text-2.1">
+<div id="outline-container-3.1" class="outline-3">
+<h3 id="sec-3.1">3.1 Step by Step</h3>
+<div id="text-3.1">
 
 
 <p>
@@ -196,9 +229,9 @@ that need to be done.  There are a number of different types of steps.
 
 </div>
 
-<div id="outline-container-2.2" class="outline-3">
-<h3 id="sec-2.2">2.2 Structured in XML</h3>
-<div id="text-2.2">
+<div id="outline-container-3.2" class="outline-3">
+<h3 id="sec-3.2">3.2 Structured in XML</h3>
+<div id="text-3.2">
 
 
 <p>
@@ -230,9 +263,9 @@ This example step (an <i>informational</i> step) simply prints the text to the s
 
 </div>
 
-<div id="outline-container-2.3" class="outline-3">
-<h3 id="sec-2.3">2.3 makerelease -n: dry-run and produce documentation</h3>
-<div id="text-2.3">
+<div id="outline-container-3.3" class="outline-3">
+<h3 id="sec-3.3">3.3 makerelease -n: dry-run and produce documentation</h3>
+<div id="text-3.3">
 
 
 <p>
@@ -245,16 +278,16 @@ would produce:
 
 </div>
 
-<div id="outline-container-2.4" class="outline-3">
-<h3 id="sec-2.4">2.4 makerelease:</h3>
-<div id="text-2.4">
+<div id="outline-container-3.4" class="outline-3">
+<h3 id="sec-3.4">3.4 makerelease:</h3>
+<div id="text-3.4">
 
 
 <p>
 By default, makerelease looks for a makerelease.xml file in the
 current directory.  Use the <i>-c FILE</i> flag to specify a particular
 file to load.  It will then proceed to iterate through each step
-and act accordingly.  See the <a href="#sec-3">Writing Steps</a> section below
+and act accordingly.  See the <a href="#sec-4">Writing Steps</a> section below
 for details.
 </p>
 <p>
@@ -276,9 +309,9 @@ for you.
 
 </div>
 
-<div id="outline-container-3" class="outline-2">
-<h2 id="sec-3">3 Writing Steps</h2>
-<div id="text-3">
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">4 Writing Steps</h2>
+<div id="text-4">
 
 
 <p>
@@ -289,16 +322,16 @@ Step specific.
 
 </div>
 
-<div id="outline-container-3.1" class="outline-3">
-<h3 id="sec-3.1">3.1 Global Attributes and Data</h3>
-<div id="text-3.1">
+<div id="outline-container-4.1" class="outline-3">
+<h3 id="sec-4.1">4.1 Global Attributes and Data</h3>
+<div id="text-4.1">
 
 
 </div>
 
-<div id="outline-container-3.1.1" class="outline-4">
-<h4 id="sec-3.1.1">3.1.1 text</h4>
-<div id="text-3.1.1">
+<div id="outline-container-4.1.1" class="outline-4">
+<h4 id="sec-4.1.1">4.1.1 &lt;text&gt;foo&lt;/text&gt;</h4>
+<div id="text-4.1.1">
 
 
 <p>
@@ -311,9 +344,9 @@ simply produce documentation.
 
 </div>
 
-<div id="outline-container-3.1.2" class="outline-4">
-<h4 id="sec-3.1.2">3.1.2 title="Title for the Step"</h4>
-<div id="text-3.1.2">
+<div id="outline-container-4.1.2" class="outline-4">
+<h4 id="sec-4.1.2">4.1.2 title="Title for the Step"</h4>
+<div id="text-4.1.2">
 
 
 <p>
@@ -346,9 +379,9 @@ Produces:
 
 </div>
 
-<div id="outline-container-3.1.3" class="outline-4">
-<h4 id="sec-3.1.3">3.1.3 stepname="name"</h4>
-<div id="text-3.1.3">
+<div id="outline-container-4.1.3" class="outline-4">
+<h4 id="sec-4.1.3">4.1.3 stepname="name"</h4>
+<div id="text-4.1.3">
 
 
 <p>
@@ -360,9 +393,9 @@ scheme like "build:configure".
 
 </div>
 
-<div id="outline-container-3.1.4" class="outline-4">
-<h4 id="sec-3.1.4">3.1.4 pause="true"</h4>
-<div id="text-3.1.4">
+<div id="outline-container-4.1.4" class="outline-4">
+<h4 id="sec-4.1.4">4.1.4 pause="true"</h4>
+<div id="text-4.1.4">
 
 
 <p>
@@ -398,16 +431,16 @@ Produces:
 
 </div>
 
-<div id="outline-container-3.2" class="outline-3">
-<h3 id="sec-3.2">3.2 Step Types</h3>
-<div id="text-3.2">
+<div id="outline-container-4.2" class="outline-3">
+<h3 id="sec-4.2">4.2 Step Types</h3>
+<div id="text-4.2">
 
 
 </div>
 
-<div id="outline-container-3.2.1" class="outline-4">
-<h4 id="sec-3.2.1">3.2.1 Informational</h4>
-<div id="text-3.2.1">
+<div id="outline-container-4.2.1" class="outline-4">
+<h4 id="sec-4.2.1">4.2.1 Informational</h4>
+<div id="text-4.2.1">
 
 
 <p>
@@ -445,9 +478,9 @@ Produces:
 
 </div>
 
-<div id="outline-container-3.2.2" class="outline-4">
-<h4 id="sec-3.2.2">3.2.2 Section</h4>
-<div id="text-3.2.2">
+<div id="outline-container-4.2.2" class="outline-4">
+<h4 id="sec-4.2.2">4.2.2 Section</h4>
+<div id="text-4.2.2">
 
 
 <p>
@@ -498,17 +531,13 @@ Produces:
    (Leaving Step: 1)
 </pre>
 </p>
-
-<p>
-
-<hr/>
-</p></div>
+</div>
 
 </div>
 
-<div id="outline-container-3.2.3" class="outline-4">
-<h4 id="sec-3.2.3">3.2.3 Include</h4>
-<div id="text-3.2.3">
+<div id="outline-container-4.2.3" class="outline-4">
+<h4 id="sec-4.2.3">4.2.3 Include</h4>
+<div id="text-4.2.3">
 
 
 <p>
@@ -528,9 +557,9 @@ with the top level <i>&lt;makerelease&gt;</i> tag in place.
 
 </div>
 
-<div id="outline-container-3.2.4" class="outline-4">
-<h4 id="sec-3.2.4">3.2.4 System</h4>
-<div id="text-3.2.4">
+<div id="outline-container-4.2.4" class="outline-4">
+<h4 id="sec-4.2.4">4.2.4 System</h4>
+<div id="text-4.2.4">
 
 
 <p>
@@ -570,9 +599,9 @@ Produces:
 
 </div>
 
-<div id="outline-container-3.2.5" class="outline-4">
-<h4 id="sec-3.2.5">3.2.5 Prompt</h4>
-<div id="text-3.2.5">
+<div id="outline-container-4.2.5" class="outline-4">
+<h4 id="sec-4.2.5">4.2.5 Prompt</h4>
+<div id="text-4.2.5">
 
 
 <p>
@@ -602,9 +631,9 @@ system commands, text, etc by wrapping the parameter name in {} brackets.
 
 </div>
 
-<div id="outline-container-3.2.6" class="outline-4">
-<h4 id="sec-3.2.6">3.2.6 Modify</h4>
-<div id="text-3.2.6">
+<div id="outline-container-4.2.6" class="outline-4">
+<h4 id="sec-4.2.6">4.2.6 Modify</h4>
+<div id="text-4.2.6">
 
 
 <p>
@@ -640,9 +669,9 @@ Note: You may specify multiple <i>&lt;modify&gt;</i> sections within the
 
 </div>
 
-<div id="outline-container-3.2.7" class="outline-4">
-<h4 id="sec-3.2.7">3.2.7 Perl</h4>
-<div id="text-3.2.7">
+<div id="outline-container-4.2.7" class="outline-4">
+<h4 id="sec-4.2.7">4.2.7 Perl</h4>
+<div id="text-4.2.7">
 
 
 <p>
@@ -679,8 +708,70 @@ new one called VERSIONDASHES with the dots replaced by dashes.
 </div>
 </div>
 </div>
+
 </div>
-<div id="postamble"><p class="date"> Date: 2008-11-01 14:38:29 PDT</p>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5">5 Examples</h2>
+<div id="text-5">
+
+
+</div>
+
+<div id="outline-container-5.1" class="outline-3">
+<h3 id="sec-5.1">5.1 Projects that are making use of makerelease scripts (in the "dist"</h3>
+<div id="text-5.1">
+
+<p>subdirectory if not otherwise specified):
+</p>
+</div>
+
+<div id="outline-container-5.1.1" class="outline-4">
+<h4 id="sec-5.1.1">5.1.1 <a href="http://www.net-snmp.org/">Net-SNMP</a></h4>
+<div id="text-5.1.1">
+
+</div>
+
+</div>
+
+<div id="outline-container-5.1.2" class="outline-4">
+<h4 id="sec-5.1.2">5.1.2 <a href="http://www.dnssec-tools.org/">DNSSEC-Tools</a></h4>
+<div id="text-5.1.2">
+
+</div>
+
+</div>
+
+<div id="outline-container-5.1.3" class="outline-4">
+<h4 id="sec-5.1.3">5.1.3 <a href="http://www.geoqo.org/">GeoQO</a></h4>
+<div id="text-5.1.3">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5.2" class="outline-3">
+<h3 id="sec-5.2">5.2 Included example scripts</h3>
+<div id="text-5.2">
+
+
+</div>
+
+<div id="outline-container-5.2.1" class="outline-4">
+<h4 id="sec-5.2.1">5.2.1 Coming soon&hellip;</h4>
+<div id="text-5.2.1">
+
+
+
+<p>
+
+<hr/>
+</p></div>
+</div>
+</div>
+</div>
+<div id="postamble"><p class="date"> Date: 2008-11-01 14:54:14 PDT</p>
 <p>HTML generated by org-mode 6.10c in emacs 21</p>
 </div></body>
 </html>
