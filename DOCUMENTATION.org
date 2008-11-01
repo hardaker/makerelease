@@ -114,14 +114,44 @@ Make Release
       doing an actual release as well as when using the /-n/ flag to
       simply produce documentation.
 
-***** prompt
+***** title="Title for the Step"
+
+      A step with the /title="something"/ attribute to the step will
+      "name" the step when displaying it to the user.
+
+#+BEGIN_EXAMPLE
+     <step type="informational" title="Call Bob">
+       <text>
+ 	Call Bob and have him commit all his outstanding changes.
+       </text>
+     </step>
+#+END_EXAMPLE
+
+     Produces:
+
+#+BEGIN_EXAMPLE
+ # makerelease -c example.xml
+ [...]
+ STEP: 2:  Call Bob
+
+   Call Bob and have him commit all his outstanding changes.
+
+#+END_EXAMPLE
+
+***** stepname="name"
+
+      The stepname will eventually be used to control auto-skipping of
+      things.  It is most useful when used with a structured naming
+      scheme like "build:configure".
+
+***** pause="true"
       
       Creating a step with /<step pause="true" ...>/ will tell
       makerelease to stop after the text is displayed and wait for the
       user to acknowledge the screen.
 
 #+BEGIN_EXAMPLE
-     <step type="informational" pause="true">
+     <step type="informational" pause="true" title="Call Bob">
        <text>
  	Call Bob and have him commit all his outstanding changes.
        </text>
@@ -133,7 +163,7 @@ Make Release
 #+BEGIN_EXAMPLE
  # makerelease -c example.xml
  [...]
- STEP: 2:
+ STEP: 2:  Call Bob
 
    Call Bob and have him commit all his outstanding changes.
 
@@ -250,7 +280,7 @@ Make Release
      Produces:
 
 #+BEGIN_EXAMPLE
-       STEP: 3:
+  STEP: 3:
 
     running 'echo "hello world"'
 
@@ -264,3 +294,81 @@ Make Release
 #+END_EXAMPLE
 
 ***** Prompt
+
+#+BEGIN_EXAMPLE
+     <step type="prompt" prompt="Enter the version number:"
+           title="Pick a Version Number for this release"
+           parameter="VERSION">
+     </step>
+#+END_EXAMPLE
+
+     Asks the user for a version number and assigns the result to the
+     VERSION parameter.  The VERSION parameter can be used in future
+     system commands, text, etc by wrapping the parameter name in {} brackets.
+
+#+BEGIN_EXAMPLE
+     <step type="system">
+       <text>We're going to produce {VERSION}
+       <commands>
+         <command>echo Hello World version {VERSION}</command>
+       </commands>
+     </step>
+#+END_EXAMPLE
+
+***** Modify
+
+    The modify step lets you make regexp based modifications to files
+    within the distribution.  Files are passed through glob() so can
+    include wildcards (*) characters.
+
+#+BEGIN_EXAMPLE
+	<step type="modify" title="Update the version number">
+	  <text>
+	    We will now modify files through the code to replace the
+	    version number with the newer one.
+	  </text>
+          <modifications>
+	    <modify
+	      find="VERSION = '(.*)'"
+	      replace="VERSION = \'{VERSION}\'">
+	      <files>
+	        <file>lib/MyModule.pm</file>
+	        <file>lib/SubDir/*.pm</file>
+	      </files>
+	    </modify>
+          </modifications>
+        </step>
+#+END_EXAMPLE
+
+    Note: You may specify multiple /<modify>/ sections within the
+    /<modifications>/ tag too.
+
+***** Perl
+
+    A wise man once said "when all else fails, resort to perl".  Ok, I
+    don't know that anyone said that actually.  But I bet someone did
+    because it seems wise to me.  Sometimes it's necessary to do extra
+    processing of user-entered data or files or the moon.  Embedding
+    perl code directly lets you accomplish these sorts of things.
+
+    The $self variable will be to the current Makerelease::Step::Perl
+    module, and within that is a reference to the parameters hash in
+    $self->{'parameters'}.
+
+    Here's an example that takes the VERSION parameter and creates a
+    new one called VERSIONDASHES with the dots replaced by dashes.
+
+#+BEGIN_EXAMPLE
+	<step type="perl" title="Defining a second internal version string"
+	  mandatory="1">
+	  <perl>
+	    <code>
+              # version number with dashes instead of dots
+	      $self->{'parameters'}{'VERSIONDASHES'} =
+    	          $self->{'parameters'}{'VERSION'};
+	      $self->{'parameters'}{'VERSIONDASHES'} =~ s/\./-/g;
+	    </code>
+	  </perl>
+	</step>
+#+END_EXAMPLE
+

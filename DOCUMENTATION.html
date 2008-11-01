@@ -6,7 +6,7 @@ lang="en" xml:lang="en">
 <title>Make Release</title>
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2008-10-30 18:03:10 PDT"/>
+<meta name="generated" content="2008-11-01 14:38:29 PDT"/>
 <meta name="author" content="Wes Hardaker"/>
 <style type="text/css">
   html { font-family: Times, serif; font-size: 12pt; }
@@ -64,7 +64,9 @@ lang="en" xml:lang="en">
 <li><a href="#sec-3.1">3.1 Global Attributes and Data</a>
 <ul>
 <li><a href="#sec-3.1.1">3.1.1 text</a></li>
-<li><a href="#sec-3.1.2">3.1.2 prompt</a></li>
+<li><a href="#sec-3.1.2">3.1.2 title="Title for the Step"</a></li>
+<li><a href="#sec-3.1.3">3.1.3 stepname="name"</a></li>
+<li><a href="#sec-3.1.4">3.1.4 pause="true"</a></li>
 </ul>
 </li>
 <li><a href="#sec-3.2">3.2 Step Types</a>
@@ -74,6 +76,8 @@ lang="en" xml:lang="en">
 <li><a href="#sec-3.2.3">3.2.3 Include</a></li>
 <li><a href="#sec-3.2.4">3.2.4 System</a></li>
 <li><a href="#sec-3.2.5">3.2.5 Prompt</a></li>
+<li><a href="#sec-3.2.6">3.2.6 Modify</a></li>
+<li><a href="#sec-3.2.7">3.2.7 Perl</a></li>
 </ul>
 </li>
 </ul>
@@ -308,18 +312,17 @@ simply produce documentation.
 </div>
 
 <div id="outline-container-3.1.2" class="outline-4">
-<h4 id="sec-3.1.2">3.1.2 prompt</h4>
+<h4 id="sec-3.1.2">3.1.2 title="Title for the Step"</h4>
 <div id="text-3.1.2">
 
 
 <p>
-Creating a step with <i>&lt;step pause="true" &hellip;&gt;</i> will tell
-makerelease to stop after the text is displayed and wait for the
-user to acknowledge the screen.
+A step with the /title="something"/ attribute to the step will
+"name" the step when displaying it to the user.
 </p>
 <p>
 <pre class="example">
-     &lt;step type="informational" pause="true"&gt;
+     &lt;step type="informational" title="Call Bob"&gt;
        &lt;text&gt;
         Call Bob and have him commit all his outstanding changes.
        &lt;/text&gt;
@@ -333,7 +336,57 @@ Produces:
 <pre class="example">
  # makerelease -c example.xml
  [...]
- STEP: 2:
+ STEP: 2:  Call Bob
+
+   Call Bob and have him commit all his outstanding changes.
+
+</pre>
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3.1.3" class="outline-4">
+<h4 id="sec-3.1.3">3.1.3 stepname="name"</h4>
+<div id="text-3.1.3">
+
+
+<p>
+The stepname will eventually be used to control auto-skipping of
+things.  It is most useful when used with a structured naming
+scheme like "build:configure".
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3.1.4" class="outline-4">
+<h4 id="sec-3.1.4">3.1.4 pause="true"</h4>
+<div id="text-3.1.4">
+
+
+<p>
+Creating a step with <i>&lt;step pause="true" &hellip;&gt;</i> will tell
+makerelease to stop after the text is displayed and wait for the
+user to acknowledge the screen.
+</p>
+<p>
+<pre class="example">
+     &lt;step type="informational" pause="true" title="Call Bob"&gt;
+       &lt;text&gt;
+        Call Bob and have him commit all his outstanding changes.
+       &lt;/text&gt;
+     &lt;/step&gt;
+</pre>
+</p>
+<p>
+Produces:
+</p>
+<p>
+<pre class="example">
+ # makerelease -c example.xml
+ [...]
+ STEP: 2:  Call Bob
 
    Call Bob and have him commit all his outstanding changes.
 
@@ -500,7 +553,7 @@ Produces:
 </p>
 <p>
 <pre class="example">
-       STEP: 3:
+  STEP: 3:
 
     running 'echo "hello world"'
 
@@ -521,11 +574,113 @@ Produces:
 <h4 id="sec-3.2.5">3.2.5 Prompt</h4>
 <div id="text-3.2.5">
 
+
+<p>
+<pre class="example">
+     &lt;step type="prompt" prompt="Enter the version number:"
+           title="Pick a Version Number for this release"
+           parameter="VERSION"&gt;
+     &lt;/step&gt;
+</pre>
+</p>
+<p>
+Asks the user for a version number and assigns the result to the
+VERSION parameter.  The VERSION parameter can be used in future
+system commands, text, etc by wrapping the parameter name in {} brackets.
+</p>
+<p>
+<pre class="example">
+     &lt;step type="system"&gt;
+       &lt;text&gt;We're going to produce {VERSION}
+       &lt;commands&gt;
+         &lt;command&gt;echo Hello World version {VERSION}&lt;/command&gt;
+       &lt;/commands&gt;
+     &lt;/step&gt;
+</pre>
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3.2.6" class="outline-4">
+<h4 id="sec-3.2.6">3.2.6 Modify</h4>
+<div id="text-3.2.6">
+
+
+<p>
+The modify step lets you make regexp based modifications to files
+within the distribution.  Files are passed through glob() so can
+include wildcards (*) characters.
+</p>
+<p>
+<pre class="example">
+        &lt;step type="modify" title="Update the version number"&gt;
+          &lt;text&gt;
+            We will now modify files through the code to replace the
+            version number with the newer one.
+          &lt;/text&gt;
+          &lt;modifications&gt;
+            &lt;modify
+              find="VERSION = '(.*)'"
+              replace="VERSION = \'{VERSION}\'"&gt;
+              &lt;files&gt;
+                &lt;file&gt;lib/MyModule.pm&lt;/file&gt;
+                &lt;file&gt;lib/SubDir/*.pm&lt;/file&gt;
+              &lt;/files&gt;
+            &lt;/modify&gt;
+          &lt;/modifications&gt;
+        &lt;/step&gt;
+</pre>
+</p>
+<p>
+Note: You may specify multiple <i>&lt;modify&gt;</i> sections within the
+<i>&lt;modifications&gt;</i> tag too.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3.2.7" class="outline-4">
+<h4 id="sec-3.2.7">3.2.7 Perl</h4>
+<div id="text-3.2.7">
+
+
+<p>
+A wise man once said "when all else fails, resort to perl".  Ok, I
+don't know that anyone said that actually.  But I bet someone did
+because it seems wise to me.  Sometimes it's necessary to do extra
+processing of user-entered data or files or the moon.  Embedding
+perl code directly lets you accomplish these sorts of things.
+</p>
+<p>
+The $self variable will be to the current Makerelease::Step::Perl
+module, and within that is a reference to the parameters hash in
+$self-&gt;{'parameters'}.
+</p>
+<p>
+Here's an example that takes the VERSION parameter and creates a
+new one called VERSIONDASHES with the dots replaced by dashes.
+</p>
+<p>
+<pre class="example">
+        &lt;step type="perl" title="Defining a second internal version string"
+          mandatory="1"&gt;
+          &lt;perl&gt;
+            &lt;code&gt;
+              # version number with dashes instead of dots
+              $self-&gt;{'parameters'}{'VERSIONDASHES'} =
+                  $self-&gt;{'parameters'}{'VERSION'};
+              $self-&gt;{'parameters'}{'VERSIONDASHES'} =~ s/\./-/g;
+            &lt;/code&gt;
+          &lt;/perl&gt;
+        &lt;/step&gt;
+</pre>
+</p>
 </div>
 </div>
 </div>
 </div>
-<div id="postamble"><p class="date"> Date: 2008-10-30 18:03:10 PDT</p>
+<div id="postamble"><p class="date"> Date: 2008-11-01 14:38:29 PDT</p>
 <p>HTML generated by org-mode 6.10c in emacs 21</p>
 </div></body>
 </html>
