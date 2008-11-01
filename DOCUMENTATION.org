@@ -320,6 +320,18 @@ Make Release
      </step>
 #+END_EXAMPLE
 
+     You can also add a /values=/ attribute to specify the legal
+     values that can be chosen based on a regular expression.  For
+     example, the following enforces a strict NUM.NUM format:
+
+#+BEGIN_EXAMPLE
+     <step type="prompt" prompt="Enter the version number:"
+           title="Pick a Version Number for this release"
+           parameter="VERSION"
+           values="^\d+\.\d+$">
+     </step>
+#+END_EXAMPLE
+
 ***** Modify
 
     The modify step lets you make regexp based modifications to files
@@ -378,13 +390,34 @@ Make Release
 #+END_EXAMPLE
 
 * Examples
-*** Projects that are making use of makerelease scripts (in the "dist"
-    subdirectory if not otherwise specified):
-***** [[http://www.net-snmp.org/][Net-SNMP]]
-***** [[http://www.dnssec-tools.org/][DNSSEC-Tools]]
-***** [[http://www.geoqo.org/][GeoQO]]
-*** Included example scripts
-***** Coming soon...
+*** Projects that are making use of makerelease scripts
 
+    (scripts are located in the "dist" subdirectory if not otherwise
+    specified):
+
+    + [[http://www.net-snmp.org/][Net-SNMP]]
+    + [[http://www.dnssec-tools.org/][DNSSEC-Tools]]
+    + [[http://www.geoqo.org/][GeoQO]]
+    + [[http://search.cpan.org/search?query=qwizard&mode=all][QWizard]]
+
+*** Included example scripts
+
+    Coming soon...
 
 ----------
+
+#+BEGIN_HTML
+<img src="http://sflogo.sourceforge.net/sflogo.php?group_id=121671&type=2" />
+#+END_HTML
+
+* COMMENT html style specifications
+
+# Local Variables:
+# org-export-html-style-extra:
+  "<style>
+   .outline-3 {margin-left: 1em;}
+   .example { margin-left: 2em;}
+   p { margin-left: 1em;}
+   </style>"
+# End:
+
