@@ -8,6 +8,7 @@ Makefile.PL
 makerelease
 Makerelease.pm
 Makerelease/Step.pm
+Makerelease/Step/Command.pm
 Makerelease/Step/Include.pm
 Makerelease/Step/Informational.pm
 Makerelease/Step/Modify.pm
