@@ -69,8 +69,11 @@ sub print_description {
 sub finish_step {
     my ($self, $step, $parentstep, $counter) = @_;
 
+    # do nothing on a dry-run
+    return if ($self->{'opts'}{'n'});
+
     # maybe sleep if we're not pausing
-    if (!$self->{'opts'}{'n'} && !$step->{'pause'}) {
+    if (!$step->{'pause'}) {
 	sleep($self->{'opts'}{'S'}) if ($self->{'opts'}{'S'});
 	return;
     }
