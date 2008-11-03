@@ -36,7 +36,9 @@ sub step {
     my $answer;
 
     # default to anything specified previously (or via command line)
-    my $default = $self->{'parameters'}{$step->{'parameter'}}
+    my $default;
+
+    $default = $self->{'parameters'}{$step->{'parameter'}}
       if (exists($self->{'parameters'}{$step->{'parameter'}}));
 
     # allow a default on the param token
