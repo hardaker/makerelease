@@ -35,13 +35,25 @@
 	  default="hardaker">
 	  <text>This is needed to support automatic SF uploading</text>
 	</step>
-	<step type="system" title="running svn update">
+	<step type="command" title="running svn update">
 	  <text>This ensures the local checkout is up to date</text>
 	  <commands>
 	    <command>svn update</command>
 	  </commands>
 	</step>
-	<step type="system" stepname="update"
+	<step type="informational" title="Verify the parameters" pause="1">
+	  <text>Please ensure the following are the proper settings
+	  before continuing:</text>
+
+	  Version:   {VERSION}
+
+	  CPANEMAIL: {CPANEMAIL}
+
+	  CPANUSER:  {CPANUSER}
+
+	  SFUSER:    {SFUSER}
+	</step>
+	<step type="command" stepname="update"
 	  title="Check for changes" pause="1">
 	  <text>This steps looks for outstanding files that have been
 	  modified.  There should be no outstanding modifications!  If
@@ -60,7 +72,7 @@
 	about to be published.
       </text>
       <steps>
-	<step type="system" title="make distclean on the current directory">
+	<step type="command" title="make distclean on the current directory">
 	  <text>We need to update the local version number and thus
 	  the current Makefile needs to be regenerated after we update
 	  the version number, so we nuke everything from orbit first
@@ -100,18 +112,38 @@
 	    </modify>
 	  </modifications>
 	</step>
-	<step type="system" title="Check Changes">
+	<step type="command" title="Check Version Changes">
 	  <commands>
 	    <command>svn diff</command>
 	  </commands>
 	</step>
-	<step type="system" title="Commit the changes" interactive="1">
+	<step type="command" title="Commit the Version changes" interactive="1">
 	  <text>Only continue if the above changes look ok</text> 
 	  <commands>
 	    <command>svn commit -m "version update to {VERSION}"</command>
 	  </commands>
 	</step>
-	<step type="system" title="Make Test">
+
+	<step type="command" title="updating MANIFEST">
+	  <text>This will update the MANIFEST based on local files and
+	    regexp exceptions in MANIFEST.SKIP</text>
+	  <commands>
+	    <command>perl -e 'use ExtUtils::Manifest qw(mkmanifest); mkmanifest();'</command>
+	  </commands>
+	</step>
+	<step type="command" title="Check MANIFEST Changes">
+	  <commands>
+	    <command>svn diff</command>
+	  </commands>
+	</step>
+	<step type="command" title="Commit the MANIFEST changes" interactive="1">
+	  <text>Only continue if the above changes look ok</text> 
+	  <commands>
+	    <command>svn commit -m "MANIFEST update"</command>
+	  </commands>
+	</step>
+
+	<step type="command" title="Make Test">
 	  <text>Perform a make test to make sure everything works.</text>
 	  <commands>
 	    <command>make clean</command>
@@ -131,22 +163,22 @@
 	Quit now if you're not ready to finish the release.
       </text>
       <steps>
-	<step type="system" title="svn tag the release">
+	<step type="command" title="svn tag the release">
 	  <commands>
 	    <command>svn copy -m "tag of version {VERSION}" https://makerelease.svn.sourceforge.net/svnroot/makerelease/trunk/makerelease https://makerelease.svn.sourceforge.net/svnroot/makerelease/tags/makerelease-{VERSION}</command>
 	  </commands>
 	</step>
-	<step type="system" title="make dist">
+	<step type="command" title="make dist">
 	  <commands>
 	    <command>make dist</command>
 	  </commands>
 	</step>
-	<step type="system" title="upload to cpan">
+	<step type="command" title="upload to cpan">
 	  <commands>
 	    <command>cpan-upload -mailto {CPANEMAIL} -user {CPANUSER} -verbose Makerelease-{VERSION}.tar.gz</command>
 	  </commands>
 	</step>
-	<step prompt="true" type="system" stepname="publish:rsync"
+	<step prompt="true" type="command" stepname="publish:rsync"
 	  title="rsync the new files">
 	  <text>This will copy the results to the SF uploads directory
 	    in your account on frs.sourceforge.net</text>
@@ -154,7 +186,7 @@
 	    <command>rsync -v Makerelease-{VERSION}.tar.gz {SFUSER}@frs.sourceforge.net:uploads/</command>
 	  </commands>
 	</step>
-	<step type="system" stepname="publish:editrelease"
+	<step type="command" stepname="publish:editrelease"
 	title="Update the SF release web page">
 	  <commands>
 	    <command>firefox 'https://sourceforge.net/project/admin/editpackages.php?group_id=206082'</command>
