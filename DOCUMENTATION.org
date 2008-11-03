@@ -267,14 +267,14 @@ Make Release
     </step>
 #+END_EXAMPLE
 
-***** System
+***** Command
 
-      System steps are designed to run a particular set of commands
+      Command steps are designed to run a particular set of commands
       via system() calls.  All the commands must succeed or the user
       will be prompted for what to do next (continue, retry or quit).
 
 #+BEGIN_EXAMPLE
-     <step type="system">
+     <step type="command">
        <commands>
          <command>echo "hello world"</command>
          <command>rm /</command>
@@ -402,7 +402,7 @@ Make Release
 
 *** Included example scripts
 
-    Coming soon...
+    + dist/makerelease.xml:  the release script for this package!
 
 ----------
 
