@@ -35,12 +35,6 @@
 	  default="hardaker">
 	  <text>This is needed to support automatic SF uploading</text>
 	</step>
-	<step type="command" title="running svn update">
-	  <text>This ensures the local checkout is up to date</text>
-	  <commands>
-	    <command>svn update</command>
-	  </commands>
-	</step>
 	<step type="informational" title="Verify the parameters" pause="1">
 	  <text>Please ensure the following are the proper settings
 	  before continuing:</text>
@@ -52,6 +46,12 @@
 	  CPANUSER:  {CPANUSER}
 
 	  SFUSER:    {SFUSER}
+	</step>
+	<step type="command" title="running svn update">
+	  <text>This ensures the local checkout is up to date</text>
+	  <commands>
+	    <command>svn update</command>
+	  </commands>
 	</step>
 	<step type="command" stepname="update"
 	  title="Check for changes" pause="1">
