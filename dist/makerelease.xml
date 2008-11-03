@@ -173,13 +173,15 @@
 	    <command>make dist</command>
 	  </commands>
 	</step>
-	<step type="command" title="upload to cpan">
+	<step type="command" title="upload to cpan" interactive="1">
+	  <text>This will upload the results to CPAN using the
+	  cpan-upload command</text>
 	  <commands>
 	    <command>cpan-upload -mailto {CPANEMAIL} -user {CPANUSER} -verbose Makerelease-{VERSION}.tar.gz</command>
 	  </commands>
 	</step>
 	<step prompt="true" type="command" stepname="publish:rsync"
-	  title="rsync the new files">
+	  title="rsync the new files" interactive="1">
 	  <text>This will copy the results to the SF uploads directory
 	    in your account on frs.sourceforge.net</text>
 	  <commands>
