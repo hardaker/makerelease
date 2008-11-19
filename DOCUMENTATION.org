@@ -219,7 +219,7 @@ Make Release
     <step type="section" title="Setup Steps" mandatory="1">
      <text>These steps do preliminary work for making a release.</text>
      <steps>
-       <step type="system">
+       <step type="command">
          <commands>
            <command>echo "hello world"</command>
          </commands>
@@ -312,7 +312,7 @@ Make Release
      system commands, text, etc by wrapping the parameter name in {} brackets.
 
 #+BEGIN_EXAMPLE
-     <step type="system">
+     <step type="command">
        <text>We're going to produce {VERSION}
        <commands>
          <command>echo Hello World version {VERSION}</command>
