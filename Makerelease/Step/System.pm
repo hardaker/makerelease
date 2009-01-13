@@ -2,6 +2,7 @@ package Makerelease::Step::System;
 
 use strict;
 use Makerelease::Step;
+use Makerelease::Step::Command;
 
 our $VERSION = '0.1';
 
