@@ -13,6 +13,13 @@ sub possibly_skip_dryrun {
     return 0;
 }
 
+sub possibly_skip_yn {
+    my ($self, $step, $parentstep, $counter) = @_;
+    # the parent will always skip for -n, so we override if and only if -n
+    return 0 if ($self->{'opts'}{'n'});
+    return $self->SUPER::possibly_skip_yn($step, $parentstep, $counter);
+}
+
 sub test {
     my ($self, $step, $parentstep, $counter) = @_;
     return 1 if ($self->require_piece($step, $parentstep, $counter,
