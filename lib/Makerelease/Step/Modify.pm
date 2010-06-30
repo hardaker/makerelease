@@ -21,11 +21,23 @@ sub get_files {
     }
     if (ref($files) eq 'HASH') {
 	foreach my $fileref (@{$self->ensure_array($files->{'file'})}) {
-	    push @files, glob($self->expand_parameters($fileref));
+	    foreach my $file (glob($self->expand_parameters($fileref))) {
+		if (-f $file) {  # weeds out directories
+		    push @files, $_;
+		} else {
+		    $self->WARN("not modifying $file");
+		}
+	    }
 	}
     } else {
 	foreach my $fileref ($self->expand_parameters($modify->{'files'})) {
-	    push @files, glob($fileref);
+	    foreach my $file (glob($$fileref)) {
+		if (-f $file) {  # weeds out directories
+		    push @files, $_;
+		} else {
+		    $self->WARN("not modifying $file");
+		}
+	    }
 	}
     }
 
