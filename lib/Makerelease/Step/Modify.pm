@@ -23,7 +23,7 @@ sub get_files {
 	foreach my $fileref (@{$self->ensure_array($files->{'file'})}) {
 	    foreach my $file (glob($self->expand_parameters($fileref))) {
 		if (-f $file) {  # weeds out directories
-		    push @files, $_;
+		    push @files, $file;
 		} else {
 		    $self->WARN("not modifying $file");
 		}
@@ -33,7 +33,7 @@ sub get_files {
 	foreach my $fileref ($self->expand_parameters($modify->{'files'})) {
 	    foreach my $file (glob($$fileref)) {
 		if (-f $file) {  # weeds out directories
-		    push @files, $_;
+		    push @files, $file;
 		} else {
 		    $self->WARN("not modifying $file");
 		}
