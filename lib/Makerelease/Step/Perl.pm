@@ -63,6 +63,7 @@ sub step {
 			$self->output("-- re-running ----------");
 		    } else {
 			$self->output("unknown response: $dowhat");
+			$self->output("(c)ontinue, (r)e-run or (q)uit?");
 			$dowhat = '';
 		    }
 		}
