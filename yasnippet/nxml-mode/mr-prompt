@@ -1,0 +1,6 @@
+    <step type="prompt" title="${1:title}" prompt="${2:Prompt}"
+      parameter="${3:parameterName}">
+      <text>
+        ${4:descriptionText}
+      </text>
+    </step>

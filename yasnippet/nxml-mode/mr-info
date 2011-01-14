@@ -1,0 +1,5 @@
+    <step type="Informational" title="${1:Title}">
+      <text>
+      ${2:Display/description text}
+      </text>
+    </step>

@@ -1,0 +1,10 @@
+    <step type="perl" title="${1:Title}">
+      <perl>
+        <code>
+	${2:
+	# use parameters:
+	# $self->{'parameters'}{'foo'} += $self->{'parameters'}{'bar'}
+	</code>
+        }
+      </perl>
+    </step>

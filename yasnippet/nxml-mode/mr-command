@@ -1,0 +1,8 @@
+    <step type="system" title="${1:title}">
+      <text>
+        ${2:Description}
+      </text>
+      <commands>
+        <command>${3:Command}</command>$0
+      </commands>
+    </step>
