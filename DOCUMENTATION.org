@@ -3,9 +3,7 @@ Make Release
 * Project Details
 
 #+BEGIN_VERSE
-  Download:    [[http://sourceforge.net/svn/?group_id=206082currently][via SVN only]]
-  Website:     [[http://makerelease.sourceforge.net/][makerelease]]
-  SF Project:  [[http://sourceforge.net/projects/makerelease/][makerelease]]  
+  Download:    [[http://github.com/hardaker/makerelease][only via GIT on github right now]]
 #+END_VERSE
 
 * Introduction and History
@@ -405,10 +403,6 @@ Make Release
     + dist/makerelease.xml:  the release script for this package!
 
 ----------
-
-#+BEGIN_HTML
-<img src="http://sflogo.sourceforge.net/sflogo.php?group_id=121671&type=2" />
-#+END_HTML
 
 * COMMENT html style specifications
 
