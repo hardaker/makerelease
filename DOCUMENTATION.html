@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -6,17 +7,20 @@ lang="en" xml:lang="en">
 <title>Make Release</title>
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2008-11-19 07:42:20 PST"/>
+<meta name="generated" content="2011-02-04 10:19:20 PST"/>
 <meta name="author" content="Wes Hardaker"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
 <style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
   html { font-family: Times, serif; font-size: 12pt; }
   .title  { text-align: center; }
   .todo   { color: red; }
   .done   { color: green; }
-  .tag    { background-color:lightblue; font-weight:normal }
+  .tag    { background-color: #add8e6; font-weight:normal }
   .target { }
-  .timestamp { color: grey }
-  .timestamp-kwd { color: CadetBlue }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
   p.verse { margin-left: 3% }
   pre {
 	border: 1pt solid #AEBDCC;
@@ -29,19 +33,44 @@ lang="en" xml:lang="en">
   table { border-collapse: collapse; }
   td, th { vertical-align: top; }
   dt { font-weight: bold; }
-
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
   .org-info-js_info-navigation { border-style:none; }
   #org-info-js_console-label { font-size:10px; font-weight:bold;
                                white-space:nowrap; }
   .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
                                  font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
 
-</style><style>
-   .outline-3 {margin-left: 1em;}
-   .example { margin-left: 2em;}
-   p { margin-left: 1em;}
-   </style>
-</head><body>
 <h1 class="title">Make Release</h1>
 
 
@@ -49,47 +78,47 @@ lang="en" xml:lang="en">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1 Project Details</a></li>
-<li><a href="#sec-2">2 Introduction and History</a>
+<li><a href="#sec-1">1 Project Details </a></li>
+<li><a href="#sec-2">2 Introduction and History </a>
 <ul>
-<li><a href="#sec-2.1">2.1 Release Pain</a></li>
-<li><a href="#sec-2.2">2.2 The solution: makerelease</a></li>
+<li><a href="#sec-2_1">2.1 Release Pain </a></li>
+<li><a href="#sec-2_2">2.2 The solution: makerelease </a></li>
 </ul>
 </li>
-<li><a href="#sec-3">3 Usage</a>
+<li><a href="#sec-3">3 Usage </a>
 <ul>
-<li><a href="#sec-3.1">3.1 Step by Step</a></li>
-<li><a href="#sec-3.2">3.2 Structured in XML</a></li>
-<li><a href="#sec-3.3">3.3 makerelease -n: dry-run and produce documentation</a></li>
-<li><a href="#sec-3.4">3.4 makerelease:</a></li>
+<li><a href="#sec-3_1">3.1 Step by Step </a></li>
+<li><a href="#sec-3_2">3.2 Structured in XML </a></li>
+<li><a href="#sec-3_3">3.3 makerelease -n: dry-run and produce documentation </a></li>
+<li><a href="#sec-3_4">3.4 makerelease: </a></li>
 </ul>
 </li>
-<li><a href="#sec-4">4 Writing Steps</a>
+<li><a href="#sec-4">4 Writing Steps </a>
 <ul>
-<li><a href="#sec-4.1">4.1 Global Attributes and Data</a>
+<li><a href="#sec-4_1">4.1 Global Attributes and Data </a>
 <ul>
-<li><a href="#sec-4.1.1">4.1.1 &lt;text&gt;foo&lt;/text&gt;</a></li>
-<li><a href="#sec-4.1.2">4.1.2 title="Title for the Step"</a></li>
-<li><a href="#sec-4.1.3">4.1.3 stepname="name"</a></li>
-<li><a href="#sec-4.1.4">4.1.4 pause="true"</a></li>
+<li><a href="#sec-4_1_1">4.1.1 &lt;text&gt;foo&lt;/text&gt; </a></li>
+<li><a href="#sec-4_1_2">4.1.2 title="Title for the Step" </a></li>
+<li><a href="#sec-4_1_3">4.1.3 stepname="name" </a></li>
+<li><a href="#sec-4_1_4">4.1.4 pause="true" </a></li>
 </ul>
 </li>
-<li><a href="#sec-4.2">4.2 Step Types</a>
+<li><a href="#sec-4_2">4.2 Step Types </a>
 <ul>
-<li><a href="#sec-4.2.1">4.2.1 Informational</a></li>
-<li><a href="#sec-4.2.2">4.2.2 Section</a></li>
-<li><a href="#sec-4.2.3">4.2.3 Include</a></li>
-<li><a href="#sec-4.2.4">4.2.4 Command</a></li>
-<li><a href="#sec-4.2.5">4.2.5 Prompt</a></li>
-<li><a href="#sec-4.2.6">4.2.6 Modify</a></li>
-<li><a href="#sec-4.2.7">4.2.7 Perl</a></li>
+<li><a href="#sec-4_2_1">4.2.1 Informational </a></li>
+<li><a href="#sec-4_2_2">4.2.2 Section </a></li>
+<li><a href="#sec-4_2_3">4.2.3 Include </a></li>
+<li><a href="#sec-4_2_4">4.2.4 Command </a></li>
+<li><a href="#sec-4_2_5">4.2.5 Prompt </a></li>
+<li><a href="#sec-4_2_6">4.2.6 Modify </a></li>
+<li><a href="#sec-4_2_7">4.2.7 Perl </a></li>
 </ul></li>
 </ul>
 </li>
-<li><a href="#sec-5">5 Examples</a>
+<li><a href="#sec-5">5 Examples </a>
 <ul>
-<li><a href="#sec-5.1">5.1 Projects that are making use of makerelease scripts</a></li>
-<li><a href="#sec-5.2">5.2 Included example scripts</a></li>
+<li><a href="#sec-5_1">5.1 Projects that are making use of makerelease scripts </a></li>
+<li><a href="#sec-5_2">5.2 Included example scripts </a></li>
 </ul>
 </li>
 </ul>
@@ -97,32 +126,30 @@ lang="en" xml:lang="en">
 </div>
 
 <div id="outline-container-1" class="outline-2">
-<h2 id="sec-1">1 Project Details</h2>
-<div id="text-1">
+<h2 id="sec-1"><span class="section-number-2">1</span> Project Details </h2>
+<div class="outline-text-2" id="text-1">
 
 
-<p>
 
 <p class="verse">
-&nbsp;&nbsp;&nbsp;&nbsp; Download:    <a href="http://sourceforge.net/svn/?group_id=206082currently">via SVN only</a> <br/>
-&nbsp;&nbsp;&nbsp;&nbsp; Website:     <a href="http://makerelease.sourceforge.net/">makerelease</a> <br/>
-&nbsp;&nbsp;&nbsp;&nbsp; SF Project:  <a href="http://sourceforge.net/projects/makerelease/">makerelease</a> <br/>
+Download:    <a href="http://github.com/hardaker/makerelease">only via GIT on github right now</a><br/>
 </p>
-</p>
+
+
 </div>
 
 </div>
 
 <div id="outline-container-2" class="outline-2">
-<h2 id="sec-2">2 Introduction and History</h2>
-<div id="text-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Introduction and History </h2>
+<div class="outline-text-2" id="text-2">
 
 
 </div>
 
-<div id="outline-container-2.1" class="outline-3">
-<h3 id="sec-2.1">2.1 Release Pain</h3>
-<div id="text-2.1">
+<div id="outline-container-2_1" class="outline-3">
+<h3 id="sec-2_1"><span class="section-number-3">2.1</span> Release Pain </h3>
+<div class="outline-text-3" id="text-2_1">
 
 
 <p>
@@ -163,9 +190,9 @@ documentation lags behind the script, the expert operator or both.
 
 </div>
 
-<div id="outline-container-2.2" class="outline-3">
-<h3 id="sec-2.2">2.2 The solution: makerelease</h3>
-<div id="text-2.2">
+<div id="outline-container-2_2" class="outline-3">
+<h3 id="sec-2_2"><span class="section-number-3">2.2</span> The solution: makerelease </h3>
+<div class="outline-text-3" id="text-2_2">
 
 
 <p>
@@ -203,15 +230,15 @@ Steps can be grouped together (e.g. "preparing", "packaging",
 </div>
 
 <div id="outline-container-3" class="outline-2">
-<h2 id="sec-3">3 Usage</h2>
-<div id="text-3">
+<h2 id="sec-3"><span class="section-number-2">3</span> Usage </h2>
+<div class="outline-text-2" id="text-3">
 
 
 </div>
 
-<div id="outline-container-3.1" class="outline-3">
-<h3 id="sec-3.1">3.1 Step by Step</h3>
-<div id="text-3.1">
+<div id="outline-container-3_1" class="outline-3">
+<h3 id="sec-3_1"><span class="section-number-3">3.1</span> Step by Step </h3>
+<div class="outline-text-3" id="text-3_1">
 
 
 <p>
@@ -223,9 +250,9 @@ that need to be done.  There are a number of different types of steps.
 
 </div>
 
-<div id="outline-container-3.2" class="outline-3">
-<h3 id="sec-3.2">3.2 Structured in XML</h3>
-<div id="text-3.2">
+<div id="outline-container-3_2" class="outline-3">
+<h3 id="sec-3_2"><span class="section-number-3">3.2</span> Structured in XML </h3>
+<div class="outline-text-3" id="text-3_2">
 
 
 <p>
@@ -234,22 +261,25 @@ This provides easy editing using any common text editor, but still
 allows for documentation to be easily embedded and displayable by
 the makerlease tool.  The most basic step structure looks like:
 </p>
-<p>
-<pre class="example">
- &lt;makerelease&gt;
-   &lt;steps&gt;
-     &lt;step type="informational"&gt;
-       &lt;text&gt;
-        Advertise: NEWS upload to sf, publish on -announce, freshmeat,
-        and the GNU FSF directory
-        (http://directory.fsf.org/)...
-         (send mail to bug-directory@gnu.org)
-       &lt;/text&gt;
-     &lt;/step&gt;
-   &lt;/steps&gt;
- &lt;/makerelease&gt;
+
+
+
+<pre class="example">&lt;makerelease&gt;
+  &lt;steps&gt;
+    &lt;step type="informational"&gt;
+      &lt;text&gt;
+       Advertise: NEWS upload to sf, publish on -announce, freshmeat,
+       and the GNU FSF directory
+       (http://directory.fsf.org/)...
+        (send mail to bug-directory@gnu.org)
+      &lt;/text&gt;
+    &lt;/step&gt;
+  &lt;/steps&gt;
+&lt;/makerelease&gt;
 </pre>
-</p>
+
+
+
 <p>
 This example step (an <i>informational</i> step) simply prints the text to the screen for the user to read.
 </p>
@@ -257,9 +287,9 @@ This example step (an <i>informational</i> step) simply prints the text to the s
 
 </div>
 
-<div id="outline-container-3.3" class="outline-3">
-<h3 id="sec-3.3">3.3 makerelease -n: dry-run and produce documentation</h3>
-<div id="text-3.3">
+<div id="outline-container-3_3" class="outline-3">
+<h3 id="sec-3_3"><span class="section-number-3">3.3</span> makerelease -n: dry-run and produce documentation </h3>
+<div class="outline-text-3" id="text-3_3">
 
 
 <p>
@@ -272,28 +302,31 @@ would produce:
 
 </div>
 
-<div id="outline-container-3.4" class="outline-3">
-<h3 id="sec-3.4">3.4 makerelease:</h3>
-<div id="text-3.4">
+<div id="outline-container-3_4" class="outline-3">
+<h3 id="sec-3_4"><span class="section-number-3">3.4</span> makerelease: </h3>
+<div class="outline-text-3" id="text-3_4">
 
 
 <p>
 By default, makerelease looks for a makerelease.xml file in the
 current directory.  Use the <i>-c FILE</i> flag to specify a particular
 file to load.  It will then proceed to iterate through each step
-and act accordingly.  See the <a href="#sec-4">Writing Steps</a> section below
+and act accordingly.  See the <a href="#sec-3_4">Writing Steps</a> section below
 for details.
 </p>
-<p>
-<pre class="example">
- # makerelease -c example.xml -n
- STEP: 1:
 
-   Advertise: NEWS upload to sf, publish on -announce, freshmeat, and
-   the GNU FSF directory (http://directory.fsf.org/)... (send mail to
-   bug-directory@gnu.org)
+
+
+<pre class="example"># makerelease -c example.xml -n
+STEP: 1:
+
+  Advertise: NEWS upload to sf, publish on -announce, freshmeat, and
+  the GNU FSF directory (http://directory.fsf.org/)... (send mail to
+  bug-directory@gnu.org)
 </pre>
-</p>
+
+
+
 <p>
 Note: by default it wraps all text nicely to fit into the screen
 for you.
@@ -304,8 +337,8 @@ for you.
 </div>
 
 <div id="outline-container-4" class="outline-2">
-<h2 id="sec-4">4 Writing Steps</h2>
-<div id="text-4">
+<h2 id="sec-4"><span class="section-number-2">4</span> Writing Steps </h2>
+<div class="outline-text-2" id="text-4">
 
 
 <p>
@@ -316,16 +349,16 @@ Step specific.
 
 </div>
 
-<div id="outline-container-4.1" class="outline-3">
-<h3 id="sec-4.1">4.1 Global Attributes and Data</h3>
-<div id="text-4.1">
+<div id="outline-container-4_1" class="outline-3">
+<h3 id="sec-4_1"><span class="section-number-3">4.1</span> Global Attributes and Data </h3>
+<div class="outline-text-3" id="text-4_1">
 
 
 </div>
 
-<div id="outline-container-4.1.1" class="outline-4">
-<h4 id="sec-4.1.1">4.1.1 &lt;text&gt;foo&lt;/text&gt;</h4>
-<div id="text-4.1.1">
+<div id="outline-container-4_1_1" class="outline-4">
+<h4 id="sec-4_1_1"><span class="section-number-4">4.1.1</span> &lt;text&gt;foo&lt;/text&gt; </h4>
+<div class="outline-text-4" id="text-4_1_1">
 
 
 <p>
@@ -338,44 +371,50 @@ simply produce documentation.
 
 </div>
 
-<div id="outline-container-4.1.2" class="outline-4">
-<h4 id="sec-4.1.2">4.1.2 title="Title for the Step"</h4>
-<div id="text-4.1.2">
+<div id="outline-container-4_1_2" class="outline-4">
+<h4 id="sec-4_1_2"><span class="section-number-4">4.1.2</span> title="Title for the Step" </h4>
+<div class="outline-text-4" id="text-4_1_2">
 
 
 <p>
 A step with the /title="something"/ attribute to the step will
 "name" the step when displaying it to the user.
 </p>
-<p>
-<pre class="example">
-     &lt;step type="informational" title="Call Bob"&gt;
-       &lt;text&gt;
-        Call Bob and have him commit all his outstanding changes.
-       &lt;/text&gt;
-     &lt;/step&gt;
+
+
+
+<pre class="example">&lt;step type="informational" title="Call Bob"&gt;
+  &lt;text&gt;
+   Call Bob and have him commit all his outstanding changes.
+  &lt;/text&gt;
+&lt;/step&gt;
 </pre>
-</p>
+
+
+
 <p>
 Produces:
 </p>
-<p>
-<pre class="example">
- # makerelease -c example.xml
- [...]
- STEP: 2:  Call Bob
 
-   Call Bob and have him commit all his outstanding changes.
+
+
+<pre class="example"># makerelease -c example.xml
+[...]
+STEP: 2:  Call Bob
+
+  Call Bob and have him commit all his outstanding changes.
 
 </pre>
-</p>
-</div>
+
+
 
 </div>
 
-<div id="outline-container-4.1.3" class="outline-4">
-<h4 id="sec-4.1.3">4.1.3 stepname="name"</h4>
-<div id="text-4.1.3">
+</div>
+
+<div id="outline-container-4_1_3" class="outline-4">
+<h4 id="sec-4_1_3"><span class="section-number-4">4.1.3</span> stepname="name" </h4>
+<div class="outline-text-4" id="text-4_1_3">
 
 
 <p>
@@ -387,9 +426,9 @@ scheme like "build:configure".
 
 </div>
 
-<div id="outline-container-4.1.4" class="outline-4">
-<h4 id="sec-4.1.4">4.1.4 pause="true"</h4>
-<div id="text-4.1.4">
+<div id="outline-container-4_1_4" class="outline-4">
+<h4 id="sec-4_1_4"><span class="section-number-4">4.1.4</span> pause="true" </h4>
+<div class="outline-text-4" id="text-4_1_4">
 
 
 <p>
@@ -397,44 +436,50 @@ Creating a step with <i>&lt;step pause="true" &hellip;&gt;</i> will tell
 makerelease to stop after the text is displayed and wait for the
 user to acknowledge the screen.
 </p>
-<p>
-<pre class="example">
-     &lt;step type="informational" pause="true" title="Call Bob"&gt;
-       &lt;text&gt;
-        Call Bob and have him commit all his outstanding changes.
-       &lt;/text&gt;
-     &lt;/step&gt;
+
+
+
+<pre class="example">&lt;step type="informational" pause="true" title="Call Bob"&gt;
+  &lt;text&gt;
+   Call Bob and have him commit all his outstanding changes.
+  &lt;/text&gt;
+&lt;/step&gt;
 </pre>
-</p>
+
+
+
 <p>
 Produces:
 </p>
-<p>
-<pre class="example">
- # makerelease -c example.xml
- [...]
- STEP: 2:  Call Bob
 
-   Call Bob and have him commit all his outstanding changes.
 
- ---- PRESS ENTER TO CONTINUE (q=quit) ----
+
+<pre class="example"># makerelease -c example.xml
+[...]
+STEP: 2:  Call Bob
+
+  Call Bob and have him commit all his outstanding changes.
+
+---- PRESS ENTER TO CONTINUE (q=quit) ----
 </pre>
-</p>
-</div>
-</div>
 
-</div>
-
-<div id="outline-container-4.2" class="outline-3">
-<h3 id="sec-4.2">4.2 Step Types</h3>
-<div id="text-4.2">
 
 
 </div>
+</div>
 
-<div id="outline-container-4.2.1" class="outline-4">
-<h4 id="sec-4.2.1">4.2.1 Informational</h4>
-<div id="text-4.2.1">
+</div>
+
+<div id="outline-container-4_2" class="outline-3">
+<h3 id="sec-4_2"><span class="section-number-3">4.2</span> Step Types </h3>
+<div class="outline-text-3" id="text-4_2">
+
+
+</div>
+
+<div id="outline-container-4_2_1" class="outline-4">
+<h4 id="sec-4_2_1"><span class="section-number-4">4.2.1</span> Informational </h4>
+<div class="outline-text-4" id="text-4_2_1">
 
 
 <p>
@@ -444,37 +489,43 @@ there just to document a step.  They can be used to tell an
 administrator to do something that can't be automated by
 including the <i>prompt</i> flag to ensure the user sees it.
 </p>
-<p>
-<pre class="example">
-     &lt;step type="informational" pause="true"&gt;
-       &lt;text&gt;
-        Call Bob and have him commit all his outstanding changes.
-       &lt;/text&gt;
-     &lt;/step&gt;
+
+
+
+<pre class="example">&lt;step type="informational" pause="true"&gt;
+  &lt;text&gt;
+   Call Bob and have him commit all his outstanding changes.
+  &lt;/text&gt;
+&lt;/step&gt;
 </pre>
-</p>
+
+
+
 <p>
 Produces:
 </p>
-<p>
-<pre class="example">
- # makerelease -c example.xml
- [...]
- STEP: 2:
 
-   Call Bob and have him commit all his outstanding changes.
 
- ---- PRESS ENTER TO CONTINUE (q=quit) ----
+
+<pre class="example"># makerelease -c example.xml
+[...]
+STEP: 2:
+
+  Call Bob and have him commit all his outstanding changes.
+
+---- PRESS ENTER TO CONTINUE (q=quit) ----
 </pre>
-</p>
+
+
+
 
 </div>
 
 </div>
 
-<div id="outline-container-4.2.2" class="outline-4">
-<h4 id="sec-4.2.2">4.2.2 Section</h4>
-<div id="text-4.2.2">
+<div id="outline-container-4_2_2" class="outline-4">
+<h4 id="sec-4_2_2"><span class="section-number-4">4.2.2</span> Section </h4>
+<div class="outline-text-4" id="text-4_2_2">
 
 
 <p>
@@ -483,55 +534,61 @@ It allows for entire sections to be skipped when using the <i>-i</i>
 p     flag and documentation to be divided up into sections.
 </p>
 
-<p>
-<pre class="example">
-    &lt;step type="section" title="Setup Steps" mandatory="1"&gt;
-     &lt;text&gt;These steps do preliminary work for making a release.&lt;/text&gt;
-     &lt;steps&gt;
-       &lt;step type="command"&gt;
-         &lt;commands&gt;
-           &lt;command&gt;echo "hello world"&lt;/command&gt;
-         &lt;/commands&gt;
-       &lt;/step&gt;
-       &lt;step type="informational"&gt;
-         &lt;text&gt;Also, Hello Universe&lt;/text&gt;
-       &lt;/step&gt;
-     &lt;/steps&gt;
-    &lt;/step&gt;
+
+
+
+<pre class="example">&lt;step type="section" title="Setup Steps" mandatory="1"&gt;
+ &lt;text&gt;These steps do preliminary work for making a release.&lt;/text&gt;
+ &lt;steps&gt;
+   &lt;step type="command"&gt;
+     &lt;commands&gt;
+       &lt;command&gt;echo "hello world"&lt;/command&gt;
+     &lt;/commands&gt;
+   &lt;/step&gt;
+   &lt;step type="informational"&gt;
+     &lt;text&gt;Also, Hello Universe&lt;/text&gt;
+   &lt;/step&gt;
+ &lt;/steps&gt;
+&lt;/step&gt;
 </pre>
-</p>
+
+
+
 <p>
 Produces:
 </p>
-<p>
-<pre class="example">
- # makerelease -c example.xml -n
- STEP: 1: Setup Steps                                                          
 
-   These steps do preliminary work for making a release.
 
-   ===== Entering Step: 1 =====
 
- STEP: 1.1:
+<pre class="example"># makerelease -c example.xml -n
+STEP: 1: Setup Steps                                                          
 
-   Commands to execute:
+  These steps do preliminary work for making a release.
 
-     echo "hello world"
+  ===== Entering Step: 1 =====
 
- STEP: 1.2:
+STEP: 1.1:
 
-   Also, Hello Universe
+  Commands to execute:
 
-   (Leaving Step: 1)
+    echo "hello world"
+
+STEP: 1.2:
+
+  Also, Hello Universe
+
+  (Leaving Step: 1)
 </pre>
-</p>
-</div>
+
+
 
 </div>
 
-<div id="outline-container-4.2.3" class="outline-4">
-<h4 id="sec-4.2.3">4.2.3 Include</h4>
-<div id="text-4.2.3">
+</div>
+
+<div id="outline-container-4_2_3" class="outline-4">
+<h4 id="sec-4_2_3"><span class="section-number-4">4.2.3</span> Include </h4>
+<div class="outline-text-4" id="text-4_2_3">
 
 
 <p>
@@ -540,20 +597,23 @@ directive, but the sections are specified in another
 makerelease xml file (which must be a fully qualified xml file
 with the top level <i>&lt;makerelease&gt;</i> tag in place.
 </p>
-<p>
-<pre class="example">
-    &lt;step type="include" title="Super extra steps"&gt;
-     &lt;file&gt;/path/to/foo.xml&lt;/file&gt;
-    &lt;/step&gt;
+
+
+
+<pre class="example">&lt;step type="include" title="Super extra steps"&gt;
+ &lt;file&gt;/path/to/foo.xml&lt;/file&gt;
+&lt;/step&gt;
 </pre>
-</p>
-</div>
+
+
 
 </div>
 
-<div id="outline-container-4.2.4" class="outline-4">
-<h4 id="sec-4.2.4">4.2.4 Command</h4>
-<div id="text-4.2.4">
+</div>
+
+<div id="outline-container-4_2_4" class="outline-4">
+<h4 id="sec-4_2_4"><span class="section-number-4">4.2.4</span> Command </h4>
+<div class="outline-text-4" id="text-4_2_4">
 
 
 <p>
@@ -561,87 +621,102 @@ Command steps are designed to run a particular set of commands
 via system() calls.  All the commands must succeed or the user
 will be prompted for what to do next (continue, retry or quit).
 </p>
-<p>
-<pre class="example">
-     &lt;step type="command"&gt;
-       &lt;commands&gt;
-         &lt;command&gt;echo "hello world"&lt;/command&gt;
-         &lt;command&gt;rm /&lt;/command&gt;
-       &lt;/commands&gt;
-     &lt;/step&gt;
+
+
+
+<pre class="example">&lt;step type="command"&gt;
+  &lt;commands&gt;
+    &lt;command&gt;echo "hello world"&lt;/command&gt;
+    &lt;command&gt;rm /&lt;/command&gt;
+  &lt;/commands&gt;
+&lt;/step&gt;
 </pre>
-</p>
+
+
+
 <p>
 Produces:
 </p>
-<p>
-<pre class="example">
-  STEP: 3:
-
-    running 'echo "hello world"'
-
-  hello world
 
 
-    running 'rm /'
 
-  rm: cannot remove `/': Is a directory
-  failed: status=256 what now (c,r,q)?
+<pre class="example">STEP: 3:
+
+  running 'echo "hello world"'
+
+hello world
+
+
+  running 'rm /'
+
+rm: cannot remove `/': Is a directory
+failed: status=256 what now (c,r,q)?
 </pre>
-</p>
+
+
+
 </div>
 
 </div>
 
-<div id="outline-container-4.2.5" class="outline-4">
-<h4 id="sec-4.2.5">4.2.5 Prompt</h4>
-<div id="text-4.2.5">
+<div id="outline-container-4_2_5" class="outline-4">
+<h4 id="sec-4_2_5"><span class="section-number-4">4.2.5</span> Prompt </h4>
+<div class="outline-text-4" id="text-4_2_5">
 
 
-<p>
-<pre class="example">
-     &lt;step type="prompt" prompt="Enter the version number:"
-           title="Pick a Version Number for this release"
-           parameter="VERSION"&gt;
-     &lt;/step&gt;
+
+
+
+<pre class="example">&lt;step type="prompt" prompt="Enter the version number:"
+      title="Pick a Version Number for this release"
+      parameter="VERSION"&gt;
+&lt;/step&gt;
 </pre>
-</p>
+
+
+
 <p>
 Asks the user for a version number and assigns the result to the
 VERSION parameter.  The VERSION parameter can be used in future
 system commands, text, etc by wrapping the parameter name in {} brackets.
 </p>
-<p>
-<pre class="example">
-     &lt;step type="command"&gt;
-       &lt;text&gt;We're going to produce {VERSION}
-       &lt;commands&gt;
-         &lt;command&gt;echo Hello World version {VERSION}&lt;/command&gt;
-       &lt;/commands&gt;
-     &lt;/step&gt;
+
+
+
+<pre class="example">&lt;step type="command"&gt;
+  &lt;text&gt;We're going to produce {VERSION}
+  &lt;commands&gt;
+    &lt;command&gt;echo Hello World version {VERSION}&lt;/command&gt;
+  &lt;/commands&gt;
+&lt;/step&gt;
 </pre>
-</p>
+
+
+
 <p>
 You can also add a <i>values=</i> attribute to specify the legal
 values that can be chosen based on a regular expression.  For
 example, the following enforces a strict NUM.NUM format:
 </p>
-<p>
-<pre class="example">
-     &lt;step type="prompt" prompt="Enter the version number:"
-           title="Pick a Version Number for this release"
-           parameter="VERSION"
-           values="^\d+\.\d+$"&gt;
-     &lt;/step&gt;
+
+
+
+<pre class="example">&lt;step type="prompt" prompt="Enter the version number:"
+      title="Pick a Version Number for this release"
+      parameter="VERSION"
+      values="^\d+\.\d+$"&gt;
+&lt;/step&gt;
 </pre>
-</p>
-</div>
+
+
 
 </div>
 
-<div id="outline-container-4.2.6" class="outline-4">
-<h4 id="sec-4.2.6">4.2.6 Modify</h4>
-<div id="text-4.2.6">
+</div>
+
+<div id="outline-container-4_2_6" class="outline-4">
+<h4 id="sec-4_2_6"><span class="section-number-4">4.2.6</span> Modify </h4>
+<div class="outline-text-4" id="text-4_2_6">
 
 
 <p>
@@ -649,26 +724,29 @@ The modify step lets you make regexp based modifications to files
 within the distribution.  Files are passed through glob() so can
 include wildcards (*) characters.
 </p>
-<p>
-<pre class="example">
-        &lt;step type="modify" title="Update the version number"&gt;
-          &lt;text&gt;
-            We will now modify files through the code to replace the
-            version number with the newer one.
-          &lt;/text&gt;
-          &lt;modifications&gt;
-            &lt;modify
-              find="VERSION = '(.*)'"
-              replace="VERSION = \'{VERSION}\'"&gt;
-              &lt;files&gt;
-                &lt;file&gt;lib/MyModule.pm&lt;/file&gt;
-                &lt;file&gt;lib/SubDir/*.pm&lt;/file&gt;
-              &lt;/files&gt;
-            &lt;/modify&gt;
-          &lt;/modifications&gt;
-        &lt;/step&gt;
+
+
+
+<pre class="example">&lt;step type="modify" title="Update the version number"&gt;
+  &lt;text&gt;
+    We will now modify files through the code to replace the
+    version number with the newer one.
+  &lt;/text&gt;
+  &lt;modifications&gt;
+    &lt;modify
+      find="VERSION = '(.*)'"
+      replace="VERSION = \'{VERSION}\'"&gt;
+      &lt;files&gt;
+        &lt;file&gt;lib/MyModule.pm&lt;/file&gt;
+        &lt;file&gt;lib/SubDir/*.pm&lt;/file&gt;
+      &lt;/files&gt;
+    &lt;/modify&gt;
+  &lt;/modifications&gt;
+&lt;/step&gt;
 </pre>
-</p>
+
+
+
 <p>
 Note: You may specify multiple <i>&lt;modify&gt;</i> sections within the
 <i>&lt;modifications&gt;</i> tag too.
@@ -677,9 +755,9 @@ Note: You may specify multiple <i>&lt;modify&gt;</i> sections within the
 
 </div>
 
-<div id="outline-container-4.2.7" class="outline-4">
-<h4 id="sec-4.2.7">4.2.7 Perl</h4>
-<div id="text-4.2.7">
+<div id="outline-container-4_2_7" class="outline-4">
+<h4 id="sec-4_2_7"><span class="section-number-4">4.2.7</span> Perl </h4>
+<div class="outline-text-4" id="text-4_2_7">
 
 
 <p>
@@ -698,21 +776,24 @@ $self-&gt;{'parameters'}.
 Here's an example that takes the VERSION parameter and creates a
 new one called VERSIONDASHES with the dots replaced by dashes.
 </p>
-<p>
-<pre class="example">
-        &lt;step type="perl" title="Defining a second internal version string"
-          mandatory="1"&gt;
-          &lt;perl&gt;
-            &lt;code&gt;
-              # version number with dashes instead of dots
-              $self-&gt;{'parameters'}{'VERSIONDASHES'} =
-                  $self-&gt;{'parameters'}{'VERSION'};
-              $self-&gt;{'parameters'}{'VERSIONDASHES'} =~ s/\./-/g;
-            &lt;/code&gt;
-          &lt;/perl&gt;
-        &lt;/step&gt;
+
+
+
+<pre class="example">&lt;step type="perl" title="Defining a second internal version string"
+  mandatory="1"&gt;
+  &lt;perl&gt;
+    &lt;code&gt;
+      # version number with dashes instead of dots
+      $self-&gt;{'parameters'}{'VERSIONDASHES'} =
+          $self-&gt;{'parameters'}{'VERSION'};
+      $self-&gt;{'parameters'}{'VERSIONDASHES'} =~ s/\./-/g;
+    &lt;/code&gt;
+  &lt;/perl&gt;
+&lt;/step&gt;
 </pre>
-</p>
+
+
+
 </div>
 </div>
 </div>
@@ -720,15 +801,15 @@ new one called VERSIONDASHES with the dots replaced by dashes.
 </div>
 
 <div id="outline-container-5" class="outline-2">
-<h2 id="sec-5">5 Examples</h2>
-<div id="text-5">
+<h2 id="sec-5"><span class="section-number-2">5</span> Examples </h2>
+<div class="outline-text-2" id="text-5">
 
 
 </div>
 
-<div id="outline-container-5.1" class="outline-3">
-<h3 id="sec-5.1">5.1 Projects that are making use of makerelease scripts</h3>
-<div id="text-5.1">
+<div id="outline-container-5_1" class="outline-3">
+<h3 id="sec-5_1"><span class="section-number-3">5.1</span> Projects that are making use of makerelease scripts </h3>
+<div class="outline-text-3" id="text-5_1">
 
 
 <p>
@@ -746,7 +827,7 @@ specified):
 <a href="http://www.geoqo.org/">GeoQO</a>
 </li>
 <li>
-<a href="http://search.cpan.org/search?query=qwizard&mode=all">QWizard</a>
+<a href="http://search.cpan.org/search?query=qwizard&amp;mode=all">QWizard</a>
 </li>
 </ul>
 
@@ -755,9 +836,9 @@ specified):
 
 </div>
 
-<div id="outline-container-5.2" class="outline-3">
-<h3 id="sec-5.2">5.2 Included example scripts</h3>
-<div id="text-5.2">
+<div id="outline-container-5_2" class="outline-3">
+<h3 id="sec-5_2"><span class="section-number-3">5.2</span> Included example scripts </h3>
+<div class="outline-text-3" id="text-5_2">
 
 
 <ul>
@@ -767,20 +848,18 @@ dist/makerelease.xml:  the release script for this package!
 </ul>
 
 
-<p>
 
 <hr/>
-</p>
-
-
-<img src="http://sflogo.sourceforge.net/sflogo.php?group_id=121671&type=2" />
 
 
 
 </div>
 </div>
 </div>
-<div id="postamble"><p class="date"> Date: 2008-11-19 07:42:20 PST</p>
-<p>HTML generated by org-mode 6.10c in emacs 21</p>
-</div></body>
+<div id="postamble">
+<p class="date"> Date: 2011-02-04 10:19:20 PST</p>
+<p class="creator">HTML generated by org-mode 6.36trans in emacs 23</p>
+</div>
+</div>
+</body>
 </html>
