@@ -1,0 +1,8 @@
+    <step type="section" title="${1:section title}" prompt="{2:yesOrNo"}>
+        <text>
+	  ${3:Description Text}
+        </text>
+      <steps>
+          $0
+      <steps>
+    </step>

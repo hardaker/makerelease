@@ -1,0 +1,14 @@
+    <step type="perl" title="${1:title}" mandatory="${2:0or1}">
+      <perl>
+        <code>
+	# put perl code here
+	#
+	# use and manipulate variables by using:
+	#     $self->{'parameters'}{'PARAMETER'} =
+    	#         $self->{'parameters'}{'OTHER'} * 2;
+
+	$0
+	
+	return 0;
+      </perl>
+    </step>
