@@ -1,10 +1,13 @@
-    <step type="perl" title="${1:Title}">
+    <step type="perl" name="${1:step-name}" title="${2:Title}"
+          pause="${3:1or0}" mandatory="${4:1or0}">
+      <text>
+         ${5:Descriptive Text}
+      </text>
       <perl>
         <code>
-	${2:
+	${6:
 	# use parameters:
 	# $self->{'parameters'}{'foo'} += $self->{'parameters'}{'bar'}
-	</code>
-        }
+	</code>}
       </perl>
     </step>

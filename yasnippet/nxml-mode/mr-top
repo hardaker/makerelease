@@ -1,0 +1,6 @@
+<!-- this is a makerelease script: http://makerelease.sourceforge.net/ -->
+<makerelease>
+  <steps>
+    ${0}
+  </steps>
+</makerelease>
