@@ -1,4 +1,4 @@
-<!-- this is a makerelease script: http://makerelease.sourceforge.net/ -->
+<!-- this is a makerelease script: http://github.com/hardaker/makerelease -->
 <makerelease>
   <steps>
     ${0}
