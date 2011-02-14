@@ -9,7 +9,7 @@
               replace="${5:VERSION = \'{VERSIONNUMBER}\'}">
 	      <files>
 	        <file>${6:path/to/file.c}</file>
-		${0}
+		$0
 		<!-- <file>...</file> ; use mr-modify-file -->
 	      </files>
 	    </modify>

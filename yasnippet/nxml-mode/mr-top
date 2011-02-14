@@ -1,6 +1,6 @@
 <!-- this is a makerelease script: http://github.com/hardaker/makerelease -->
 <makerelease>
   <steps>
-    ${0}
+    $0
   </steps>
 </makerelease>

@@ -3,6 +3,6 @@
               replace="${2:VERSION = \'{VERSIONNUMBER}\'}">
 	      <files>
 	        <file>${2:path/to/file.c}</file>
-		${0}
+		$0
 	      </files>
 	    </modify>

@@ -5,7 +5,7 @@
       </text>
       <commands>
         <command>${6:Command}</command>
-	${0}
+	$0
         <!-- <comand>...</command> ; use mr-command1 -->
       </commands>
     </step>
