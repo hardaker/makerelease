@@ -1,11 +1,11 @@
-    <step type="command" name="${1:step-name}" title="${2:Title}"
-          pause="${3:1or0}" mandatory="${4:1or0}">
-      <text>
-         ${5:Descriptive Text}
-      </text>
-      <commands>
-        <command>${6:Command}</command>
+<step type="command" name="${1:step-name}" title="${2:Title}"
+      pause="${3:1or0}" mandatory="${4:1or0}">
+  <text>
+     ${5:Descriptive Text}
+  </text>
+  <commands>
+    <command>${6:Command}</command>
 	$0
-        <!-- <comand>...</command> ; use mr-command1 -->
-      </commands>
-    </step>
+    <!-- <comand>...</command> ; use mr-command1 -->
+  </commands>
+</step>

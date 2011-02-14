@@ -1,8 +1,9 @@
-    <step type="section" name="${1:step-name}" title="${2:Title}"
-          pause="${3:1or0}" mandatory="${4:1or0}" prompt="{5:yesOrNo"}>
-      <text>
-         ${6:Descriptive Text}
-      <steps>
-          $0
-      <steps>
-    </step>
+<step type="section" name="${1:step-name}" title="${2:Title}"
+      pause="${3:1or0}" mandatory="${4:1or0}" prompt="${5:yesOrNo}">
+  <text>
+     ${6:Descriptive Text}
+  </text>
+  <steps>
+      $0
+  </steps>
+</step>

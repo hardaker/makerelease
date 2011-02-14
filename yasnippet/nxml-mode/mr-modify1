@@ -1,8 +1,8 @@
-	    <modify
-	      find="${1:VERSION = '(.*)'}"
-              replace="${2:VERSION = \'{VERSIONNUMBER}\'}">
-	      <files>
-	        <file>${2:path/to/file.c}</file>
-		$0
-	      </files>
-	    </modify>
+<modify
+  find="${1:VERSION = '(.*)'}"
+  replace="${2:VERSION = \'{VERSIONNUMBER}\'}">
+  <files>
+    <file>${2:path/to/file.c}</file>
+	$0
+  </files>
+</modify>

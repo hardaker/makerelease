@@ -1,18 +1,18 @@
-    <step type="perl" name="${1:step-name}" title="${2:Title}"
-          pause="${3:1or0}" mandatory="${4:1or0}">
-      <text>
-         ${5:Descriptive Text}
-      </text>
-      <perl>
-        <code>
+<step type="perl" name="${1:step-name}" title="${2:Title}"
+      pause="${3:1or0}" mandatory="${4:1or0}">
+  <text>
+     ${5:Descriptive Text}
+  </text>
+  <perl>
+    <code>
 	# put perl code here
 	#
 	# use and manipulate variables by using:
 	#     $self->{'parameters'}{'PARAMETER'} =
-    	#         $self->{'parameters'}{'OTHER'} * 2;
+	#         $self->{'parameters'}{'OTHER'} * 2;
 
 	$0
 	
 	return 0;
-      </perl>
-    </step>
+  </perl>
+</step>

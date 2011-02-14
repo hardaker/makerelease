@@ -1,12 +1,12 @@
-    <step type="modify" title="${1:title}"
-      stepname="${2:stepname}">
-        <text>
+<step type="modify" title="${1:title}"
+  stepname="${2:stepname}">
+    <text>
 	${3:Description Text}
-        </text>
-        <modifications>
+    </text>
+    <modifications>
 	    <modify
 	      find="${4:VERSION = '(.*)'}"
-              replace="${5:VERSION = \'{VERSIONNUMBER}\'}">
+          replace="${5:VERSION = \'{VERSIONNUMBER}\'}">
 	      <files>
 	        <file>${6:path/to/file.c}</file>
 		$0
@@ -14,5 +14,5 @@
 	      </files>
 	    </modify>
 	    <!-- <modify>...</modify> ; use mr-modify1 -->
-        </modifications>
-    </step>
+    </modifications>
+</step>
