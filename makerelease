@@ -15,7 +15,8 @@ my $descr;
 our @XMLinopts = (ForceArray => [qw(steps step commands command
 				    modifications modify
 				    perl code files file
-				   )]);
+				   )],
+		  KeyAttr => 'boguspleasedontkey');
 
 LocalGetOptions(\%opts,
 	   ['c|config-file=s',        'makerelease xml config file to use'],
