@@ -1,4 +1,4 @@
-<step type="Informational"	name="${1:step-name}" title="${2:Title}"
+<step type="Informational" name="${1:step-name}" title="${2:Title}"
       pause="${3:1}" mandatory="${4:1or0}">
   <text>
      ${5:Descriptive Text to display optional including {PARAMNAME}s }
