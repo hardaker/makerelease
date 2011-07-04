@@ -118,9 +118,9 @@ sub test {
 }
 
 sub WARN {
-    my ($self, $step, @args) = @_;
+    my ($self, @args) = @_;
     use Data::Dumper;;
-    print STDERR "WARNING: step: '$step->{'title'}'\n";
+    print STDERR "WARNING: step: '$self->{'title'}'\n";
     print STDERR "WARNING: " . join("",@args) . "\n\n";
     return 1;
 }

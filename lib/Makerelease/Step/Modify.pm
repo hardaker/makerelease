@@ -25,7 +25,7 @@ sub get_files {
 		if (-f $file) {  # weeds out directories
 		    push @files, $file;
 		} else {
-		    # $self->WARN("not modifying $file");
+		    $self->WARN("not modifying $file");
 		}
 	    }
 	}
