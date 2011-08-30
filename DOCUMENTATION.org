@@ -296,6 +296,28 @@ Make Release
   failed: status=256 what now (c,r,q)?
 #+END_EXAMPLE
 
+     If you expect a command to fail, then you can use the
+     'expectfailure' attribute to make it stop only on a success.
+
+#+BEGIN_EXAMPLE
+     <step type="command">
+       <commands>
+         <command expectfailure="1">/bin/false</command>
+       </commands>
+     </step>
+#+END_EXAMPLE
+
+     If you really don't care about it succeeding or failing, use the
+     ignoreerror flag instead:
+
+#+BEGIN_EXAMPLE
+     <step type="command">
+       <commands>
+         <command ignoreerror="1">/bin/false</command>
+       </commands>
+     </step>
+#+END_EXAMPLE
+
 ***** Prompt
 
 #+BEGIN_EXAMPLE

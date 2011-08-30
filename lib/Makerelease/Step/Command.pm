@@ -35,13 +35,17 @@ sub step {
     foreach my $command (@{$step->{'commands'}[0]{'command'}}) {
 	my $status = 1;
 
+	my $ignoreerror = 0;
+	my $expectfailure = 0;
+
+	$ignoreerror = 1
+	    if (ref($command) eq 'HASH' && $command->{'ignoreerror'});
+	$expectfailure = 1
+	    if (ref($command) eq 'HASH' && $command->{'expectfailure'});
+
 	# run it till we get a succeesful result or they bail on us
 		
-	while ($status ne '0') {
-
-	    my $ignoreerror = 0;
-	    $ignoreerror = 1
-	      if (ref($command) eq 'HASH' && $command->{'ignoreerror'});
+	while ($status ne '0' && $status ne '') {
 
 	    my $cmdstr = $self->get_command_string($command);
 
@@ -49,8 +53,9 @@ sub step {
 	    system("$cmdstr");
 	    $status = $?;
 	    $status = 0 if ($ignoreerror);
+	    $status = ! $status if ($expectfailure);
 
-	    if ($status ne 0 ) {
+	    if ($status ne 0 && $status ne '') {
 		# command failed, prompt for what to do?
 		my $dowhat = '';
 
