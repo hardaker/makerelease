@@ -1,8 +1,9 @@
 <step type="prompt" name="${1:step-name}" title="${2:Title}"
       mandatory="${3:1}"
 	  parameter="${4:parameterName}"
-	  prompt="${5:Question Prompt}">
+	  prompt="${5:Question Prompt}"
+	  default="${6:default}">
   <text>
-    ${6:descriptionText}
+    ${7:descriptionText}
   </text>
 </step>

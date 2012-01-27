@@ -357,6 +357,7 @@ Make Release
 #+BEGIN_EXAMPLE
      <step type="prompt" prompt="Enter the version number:"
            title="Pick a Version Number for this release"
+           default="88"
            parameter="VERSION">
      </step>
 #+END_EXAMPLE
