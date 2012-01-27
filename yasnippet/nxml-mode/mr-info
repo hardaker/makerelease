@@ -1,6 +1,6 @@
 <step type="Informational" name="${1:step-name}" title="${2:Title}"
-      pause="${3:1}" mandatory="${4:1or0}">
+      pause="${3:1}" interactive="${4:1or0}" mandatory="${5:1or0}">
   <text>
-     ${5:Descriptive Text to display optional including {PARAMNAME}s }
+     ${6:Descriptive Text to display optional including {PARAMNAME}s }
   </text>
 </step>

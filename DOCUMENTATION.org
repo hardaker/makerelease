@@ -176,6 +176,40 @@ Make Release
  ---- PRESS ENTER TO CONTINUE (q=quit) ----
 #+END_EXAMPLE
 
+    * interactive="true"
+      
+      Creating a step with /<step interactive="true" ...>/ will tell
+      makerelease to stop and ask the user if they want to execute
+      this particular step.  The user will be given the choice to say
+      yes, no, or to quit.
+
+      This is particularily helpful with the /section/ step type as it
+      allows an entire tree to be skipped if the user doesn't need to
+      run an entire section.
+
+#+BEGIN_EXAMPLE
+     <step type="command" interactive="true" title="Execute It">
+       <text>Do you really want me to remove /tmp/something?</text>
+        <commands>
+   	  <command>rm /tmp/something</command>
+        </commands>
+     </step>
+#+END_EXAMPLE
+
+    Produces:
+
+#+BEGIN_EXAMPLE
+   # makerelease -c example.xml
+  STEP: 1: Execute It
+  
+    Do you really want me to remove /tmp/something?
+  
+  Do step 1 (y,n,q)? y
+    running 'rm /tmp/something'
+
+ ---- PRESS ENTER TO CONTINUE (q=quit) ----
+#+END_EXAMPLE
+
 *** Step Types
 ***** Informational
 
@@ -210,7 +244,7 @@ Make Release
 
       The /section/ type lets you group various sub-steps together.
       It allows for entire sections to be skipped when using the /-i/
- p     flag and documentation to be divided up into sections.
+      flag and documentation to be divided up into sections.
 
 
 #+BEGIN_EXAMPLE

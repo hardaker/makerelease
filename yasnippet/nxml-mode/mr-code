@@ -1,11 +1,11 @@
 <step type="perl" name="${1:step-name}" title="${2:Title}"
-      pause="${3:1or0}" mandatory="${4:1or0}">
+      pause="${3:1or0}" interactive="${4:1or0}" mandatory="${5:1or0}">
   <text>
-     ${5:Descriptive Text}
+     ${6:Descriptive Text}
   </text>
   <perl>
     <code>
-	${6:
+	${7:
 	# use parameters:
 	# $self->{'parameters'}{'foo'} += $self->{'parameters'}{'bar'}
 	</code>}

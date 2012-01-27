@@ -1,7 +1,8 @@
 <step type="section" name="${1:step-name}" title="${2:Title}"
-      pause="${3:1or0}" mandatory="${4:1or0}" prompt="${5:yesOrNo}">
+      pause="${3:1or0}" interactive="${4:1or0}"
+      mandatory="${5:1or0}" prompt="${6:yesOrNo}">
   <text>
-     ${6:Descriptive Text}
+     ${7:Descriptive Text}
   </text>
   <steps>
       $0
