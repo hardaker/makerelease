@@ -96,7 +96,10 @@ sub expand_parameters {
 
     return $string if ($self->{'opts'}{'n'});
     # ignore {} sets with a leading $
-    $string =~ s/([^\$]){([^\}]+)}/$1$self->{'parameters'}{$2}/g;
+    $string =~ s/([^\$]){([^\}]+)}/$1 . (exists($self->{'parameters'}{$2}) ? $self->{'parameters'}{$2} : "{$2}")/eg;
+
+    # get the initial one too with no leading data
+    $string =~ s/^{([^\}]+)}/(exists($self->{'parameters'}{$1}) ? $self->{'parameters'}{$1} : "{$1}")/eg;
     return $string;
 }
 
