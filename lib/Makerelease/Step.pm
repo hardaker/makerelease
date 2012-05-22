@@ -34,6 +34,30 @@ sub possibly_skip_yn {
     return 0;
 }
 
+sub possibly_skip_test {
+    my ($self, $step, $parentstep, $counter) = @_;
+    my ($result, $test);
+
+    if ($step->{'skipif'}) {
+	# Check if test matches
+        $test = $self->expand_text( $step->{'skipif'} );
+	$self->DEBUG("SkipIf: >$test<\n");
+        $result = eval $test;
+	$self->DEBUG("skipIf returns $result.\n");
+        return $result;
+    }
+
+    if ($step->{'skipunless'}) {
+	# Check if test matches
+        $test = $self->expand_text( $step->{'skipunless'} );
+	$self->DEBUG("SkipUnless: >$test<\n");
+        $result = eval $test;
+	$self->DEBUG("skipUnless returns $result.\n");
+        return 1-$result;
+    }
+    return 0;
+}
+
 sub possibly_skip_dryrun {
     my ($self, $step, $parentstep, $counter) = @_;
     if ($self->{'opts'}{'n'}) {
@@ -54,6 +78,9 @@ sub possibly_skip {
 
     # handle mandatory steps
     return 0 if ($step->{'mandatory'});
+
+    # handle skip tests
+    return $self->possibly_skip_test(@_);
 
     # handle -i
     return $self->possibly_skip_yn(@_);
